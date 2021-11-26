@@ -50,11 +50,15 @@ public class EMPlugin extends CordovaPlugin {
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if ("getDeviceInfo".equals(action)) {
-            JSONObject r = new JSONObject();
-	        r.put("isVirtual", this.isVirtual());
-            r.put("serial", this.getSerialNumber());
-            r.put("info", this.getInfo());
-            callbackContext.success(r);
+			cordova.getThreadPool().execute(new Runnable() {
+				public void run(){
+					JSONObject r = new JSONObject();
+					r.put("isVirtual", this.isVirtual());
+					r.put("serial", this.getSerialNumber());
+					r.put("info", this.getInfo());
+					callbackContext.success(r);
+				}
+			});
 			return true;
         }
         else {
