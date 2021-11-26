@@ -1,0 +1,33 @@
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+		id="cordova-plugin-emplugin" version="0.0.1">
+	<name>EMPlugin</name>
+	<description>Custom EM plugin</description>
+	<keywords>cordova,emplugin</keywords>
+
+	<uses-permission android:name="$PACKAGE_NAME.permission.READ_PHONE_STATE"/>
+
+	<js-module src="www/emplugin.js" name="emplugin">
+		<clobbers target="EMPlugin" />
+	</js-module>
+
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="EMPlugin" >
+				<param name="android-package" value="ru.pronetcom.easymerch2.EMPlugin"/>
+			</feature>
+		</config-file>
+
+		<source-file src="src/android/EMPlugin.java" target-dir="ru/pronetcom/easymerch2/EMPlugin" />
+	</platform>
+
+	<platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="EMPlugin">
+                <param name="ios-package" value="EMPlugin"/>
+            </feature>
+        </config-file>
+
+		<header-file src="src/ios/CDVEMPlugin.h" />
+		<source-file src="src/ios/CDVEMPlugin.m" />
+	</platform>
+</plugin>

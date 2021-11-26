@@ -1,1 +1,1 @@
-# cordova-plugin-emcustom
+# cordova-plugin-emplugin
