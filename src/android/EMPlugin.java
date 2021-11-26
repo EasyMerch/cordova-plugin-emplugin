@@ -69,6 +69,8 @@ public class EMPlugin extends CordovaPlugin {
 			// 		}
 			// 	}
 			// });
+			JSONObject r = new JSONObject();
+			callbackContext.success(r);
 			return true;
         }
         else {
