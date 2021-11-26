@@ -19,7 +19,7 @@ function EMPlugin () {
     var t = this;
 
     channel.onCordovaReady.subscribe(function () {
-        t.getInfo(
+        t.getDeviceInfo(
             function (info) {
 				t.aviable = true;
 				t.is_virtual	= info.isVirtual || 'unknown';
