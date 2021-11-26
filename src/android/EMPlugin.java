@@ -60,7 +60,12 @@ public class EMPlugin extends CordovaPlugin {
 						r.put("info", self.getInfo());
 						callbackContext.success(r);
 					} catch(JSONException e) {
-						callbackContext.error(e);
+						JSONObject ex_json = new JSONObject();
+						try{
+							ex_json.put("error", e.toString());
+						} catch(JSONException e2) {
+						}
+						callbackContext.error(ex_json);
 					}
 				}
 			});
