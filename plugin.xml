@@ -13,7 +13,7 @@
 	<platform name="android">
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="EMPlugin" >
-				<param name="android-package" value="ru.pronetcom.easymerch2.EMPlugin"/>
+				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMPlugin"/>
 			</feature>
 		</config-file>
 
