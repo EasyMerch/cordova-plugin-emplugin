@@ -112,7 +112,7 @@ public class EMPlugin extends CordovaPlugin {
 			android.os.Build.HARDWARE,
 			this.onBlueStacks(),
 			this.onNox(),
-			Device.getSystemProperty("ro.kernel.qemu")
+			EMPlugin.getSystemProperty("ro.kernel.qemu")
 		);
 	}
 
