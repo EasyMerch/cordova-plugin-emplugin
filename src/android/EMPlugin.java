@@ -51,24 +51,24 @@ public class EMPlugin extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		EMPlugin self = this;
         if ("getDeviceInfo".equals(action)) {
-			cordova.getThreadPool().execute(new Runnable() {
-				public void run() {
-					try{
-						JSONObject r = new JSONObject();
-						r.put("isVirtual", self.isVirtual());
-						r.put("serial", self.getSerialNumber());
-						r.put("info", self.getInfo());
-						callbackContext.success(r);
-					} catch(JSONException e) {
-						JSONObject ex_json = new JSONObject();
-						try{
-							ex_json.put("error", e.toString());
-						} catch(JSONException e2) {
-						}
-						callbackContext.error(ex_json);
-					}
-				}
-			});
+			// cordova.getThreadPool().execute(new Runnable() {
+			// 	public void run() {
+			// 		try{
+			// 			JSONObject r = new JSONObject();
+			// 			r.put("isVirtual", self.isVirtual());
+			// 			r.put("serial", self.getSerialNumber());
+			// 			r.put("info", self.getInfo());
+			// 			callbackContext.success(r);
+			// 		} catch(JSONException e) {
+			// 			JSONObject ex_json = new JSONObject();
+			// 			try{
+			// 				ex_json.put("error", e.toString());
+			// 			} catch(JSONException e2) {
+			// 			}
+			// 			callbackContext.error(ex_json);
+			// 		}
+			// 	}
+			// });
 			return true;
         }
         else {
