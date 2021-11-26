@@ -55,6 +55,7 @@ public class EMPlugin extends CordovaPlugin {
             r.put("serial", this.getSerialNumber());
             r.put("info", this.getInfo());
             callbackContext.success(r);
+			return true;
         }
         else {
             return false;
