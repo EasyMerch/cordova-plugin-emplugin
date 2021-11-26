@@ -21,6 +21,7 @@ import android.provider.Settings;
 
 public class EMPlugin extends CordovaPlugin {
 	public static final String TAG = "EMPlugin";
+	private static String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
     /**
      * Constructor.
