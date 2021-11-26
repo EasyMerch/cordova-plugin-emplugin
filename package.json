@@ -1,0 +1,14 @@
+{
+	"name": "cordova-plugin-emplugin",
+	"version": "0.0.1",
+	"description": "Custom EM plugin",
+	"cordova": {
+	  "id": "cordova-plugin-emplugin",
+	  "platforms": [
+		"android",
+		"ios"
+	  ]
+	},
+	"repository": "github:Lordovik/cordova-plugin-emplugin",
+	"keywords": []
+  }
