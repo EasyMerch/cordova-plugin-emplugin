@@ -49,13 +49,14 @@ public class EMPlugin extends CordovaPlugin {
      * @return                  True if the action was valid, false if not.
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		EMPlugin self = this;
         if ("getDeviceInfo".equals(action)) {
 			cordova.getThreadPool().execute(new Runnable() {
 				public void run(){
 					JSONObject r = new JSONObject();
-					r.put("isVirtual", this.isVirtual());
-					r.put("serial", this.getSerialNumber());
-					r.put("info", this.getInfo());
+					r.put("isVirtual", self.isVirtual());
+					r.put("serial", self.getSerialNumber());
+					r.put("info", self.getInfo());
 					callbackContext.success(r);
 				}
 			});
