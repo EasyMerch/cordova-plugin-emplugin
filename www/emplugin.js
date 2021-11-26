@@ -38,7 +38,7 @@ function EMPlugin () {
 
 
 EMPlugin.prototype.getDeviceInfo = function (successCallback, errorCallback) {
-    argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
+    // argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
     exec(successCallback, errorCallback, 'EMPlugin', 'getDeviceInfo', []);
 };
 
