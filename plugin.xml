@@ -1,6 +1,8 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 		id="cordova-plugin-emplugin" version="0.0.1">
 	<name>EMPlugin</name>
+	<license>Apache 2.0</license>
+	<author>Kirill Kokorin</author>
 	<description>Custom EM plugin</description>
 	<keywords>cordova,emplugin</keywords>
 
@@ -18,6 +20,14 @@
 		</config-file>
 
 		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
+<!-- 		
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Device" >
+                <param name="android-package" value="org.apache.cordova.device.Device"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/Device.java" target-dir="src/org/apache/cordova/device" /> -->
 	</platform>
 
 	<platform name="ios">
