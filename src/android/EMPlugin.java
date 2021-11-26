@@ -52,7 +52,7 @@ public class EMPlugin extends CordovaPlugin {
 		EMPlugin self = this;
         if ("getDeviceInfo".equals(action)) {
 			cordova.getThreadPool().execute(new Runnable() {
-				public void run(){
+				public void run() throws JSONException {
 					JSONObject r = new JSONObject();
 					r.put("isVirtual", self.isVirtual());
 					r.put("serial", self.getSerialNumber());
