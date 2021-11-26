@@ -23,59 +23,43 @@ public class EMPlugin extends CordovaPlugin {
 	public static final String TAG = "EMPlugin";
 	private static String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
-    /**
-     * Constructor.
-     */
-    public EMPlugin() {
-    }
+	/**
+	 * Constructor.
+	 */
+	public EMPlugin() {
+	}
 
-    /**
-     * Sets the context of the Command. This can then be used to do things like
-     * get file paths associated with the Activity.
-     *
-     * @param cordova The context of the main Activity.
-     * @param webView The CordovaWebView Cordova is running in.
-     */
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-        super.initialize(cordova, webView);
-    }
+	/**
+	 * Sets the context of the Command. This can then be used to do things like
+	 * get file paths associated with the Activity.
+	 *
+	 * @param cordova The context of the main Activity.
+	 * @param webView The CordovaWebView Cordova is running in.
+	 */
+	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		super.initialize(cordova, webView);
+	}
 
-    /**
-     * Executes the request and returns PluginResult.
-     *
-     * @param action            The action to execute.
-     * @param args              JSONArry of arguments for the plugin.
-     * @param callbackContext   The callback id used when calling back into JavaScript.
-     * @return                  True if the action was valid, false if not.
-     */
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-		EMPlugin self = this;
-        if ("getDeviceInfo".equals(action)) {
-			// cordova.getThreadPool().execute(new Runnable() {
-			// 	public void run() {
-			// 		try{
-			// 			JSONObject r = new JSONObject();
-			// 			r.put("isVirtual", self.isVirtual());
-			// 			r.put("serial", self.getSerialNumber());
-			// 			r.put("info", self.getInfo());
-			// 			callbackContext.success(r);
-			// 		} catch(JSONException e) {
-			// 			JSONObject ex_json = new JSONObject();
-			// 			try{
-			// 				ex_json.put("error", e.toString());
-			// 			} catch(JSONException e2) {
-			// 			}
-			// 			callbackContext.error(ex_json);
-			// 		}
-			// 	}
-			// });
+	/**
+	 * Executes the request and returns PluginResult.
+	 *
+	 * @param action            The action to execute.
+	 * @param args              JSONArry of arguments for the plugin.
+	 * @param callbackContext   The callback id used when calling back into JavaScript.
+	 * @return                  True if the action was valid, false if not.
+	 */
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		if ("getDeviceInfo".equals(action)) {
 			JSONObject r = new JSONObject();
+			r.put("isVirtual", self.isVirtual());
+			r.put("serial", self.getSerialNumber());
+			r.put("info", self.getInfo());
 			callbackContext.success(r);
 			return true;
-        }
-        else {
-            return false;
-        }
+		}
+		else {
+			return false;
+		}
 	}
 
 	public String getSerialNumber(){
@@ -83,7 +67,7 @@ public class EMPlugin extends CordovaPlugin {
 		return "";
 	}
 
-    public boolean isVirtual() {
+	public boolean isVirtual() {
 		return android.os.Build.FINGERPRINT.contains("generic")
 			|| android.os.Build.PRODUCT.contains("sdk")
 			//
@@ -103,7 +87,7 @@ public class EMPlugin extends CordovaPlugin {
 			|| "google_sdk".equals(android.os.Build.PRODUCT)
 			// another Android SDK emulator check
 			|| "1".equals(EMPlugin.getSystemProperty("ro.kernel.qemu"));
-    }
+	}
 
 	public String getInfo() {
 		return String.format(
@@ -135,32 +119,32 @@ public class EMPlugin extends CordovaPlugin {
 	}
 
 	public static String getSystemProperty(String propName) {
-        Process process = null;
-        BufferedReader bufferedReader = null;
+		Process process = null;
+		BufferedReader bufferedReader = null;
 
-        try {
-            process = new ProcessBuilder().command(GETPROP_EXECUTABLE_PATH, propName).redirectErrorStream(true).start();
-            bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = bufferedReader.readLine();
-            if (line == null){
-                line = ""; //prop not set
-            }
-            Log.i(TAG,"read System Property: " + propName + "=" + line);
-            return line;
-        } catch (Exception e) {
-            Log.e(TAG,"Failed to read System Property " + propName,e);
-            return "";
-        } finally{
-            if (bufferedReader != null){
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {}
-            }
-            if (process != null){
-                process.destroy();
-            }
-        }
-    }
+		try {
+			process = new ProcessBuilder().command(GETPROP_EXECUTABLE_PATH, propName).redirectErrorStream(true).start();
+			bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			String line = bufferedReader.readLine();
+			if (line == null){
+				line = ""; //prop not set
+			}
+			Log.i(TAG,"read System Property: " + propName + "=" + line);
+			return line;
+		} catch (Exception e) {
+			Log.e(TAG,"Failed to read System Property " + propName,e);
+			return "";
+		} finally{
+			if (bufferedReader != null){
+				try {
+					bufferedReader.close();
+				} catch (IOException e) {}
+			}
+			if (process != null){
+				process.destroy();
+			}
+		}
+	}
 
 	public Boolean onBlueStacks(){
 		File sharedFolder = new File(android.os.Environment
