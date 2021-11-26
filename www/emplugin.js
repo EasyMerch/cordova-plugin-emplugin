@@ -11,7 +11,7 @@ channel.waitForInitialization('onCordovaEMInfoReady');
  */
 function EMPlugin () {
     this.aviable	= null;
-    this.is_virtual	= null;
+    this.isVirtual	= null;
     this.serial		= null;
     this.info		= null;
 	
