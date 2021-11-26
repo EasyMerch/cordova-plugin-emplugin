@@ -48,16 +48,20 @@ public class EMPlugin extends CordovaPlugin {
      * @param callbackContext   The callback id used when calling back into JavaScript.
      * @return                  True if the action was valid, false if not.
      */
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
 		EMPlugin self = this;
         if ("getDeviceInfo".equals(action)) {
 			cordova.getThreadPool().execute(new Runnable() {
-				public void run() throws JSONException {
-					JSONObject r = new JSONObject();
-					r.put("isVirtual", self.isVirtual());
-					r.put("serial", self.getSerialNumber());
-					r.put("info", self.getInfo());
-					callbackContext.success(r);
+				public void run() {
+					try{
+						JSONObject r = new JSONObject();
+						r.put("isVirtual", self.isVirtual());
+						r.put("serial", self.getSerialNumber());
+						r.put("info", self.getInfo());
+						callbackContext.success(r);
+					} catch(JSONException e) {
+						callbackContext.error(e);
+					}
 				}
 			});
 			return true;
