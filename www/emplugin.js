@@ -10,23 +10,25 @@ channel.waitForInitialization('onCordovaEMInfoReady');
  * @constructor
  */
 function EMPlugin () {
-    this.aviable	= null;
-    this.isVirtual	= null;
-    this.serial		= null;
-    this.info		= null;
+	this.device = {
+		aviable: null,
+		isVirtual: null,
+		serial: null,
+		info: null
+	};
 	
     var t = this;
     channel.onCordovaReady.subscribe(function () {
         t.getDeviceInfo(
             function (info) {
-				t.aviable	= true;
-				t.isVirtual	= info.isVirtual || 'unknown';
-				t.serial	= info.serial || 'unknown';
-				t.info		= info.info || 'unknown';
+				t.device.aviable	= true;
+				t.device.isVirtual	= info.isVirtual || 'unknown';
+				t.device.serial		= info.serial || 'unknown';
+				t.device.info		= info.info || 'unknown';
                 channel.onCordovaEMInfoReady.fire();
             },
             function (e) {
-				t.aviable = false;
+				t.device.aviable = false;
                 channel.onCordovaEMInfoReady.fire();
                 console.error('[ERROR] Error initializing cordova-plugin-device: ' + e);
             }
