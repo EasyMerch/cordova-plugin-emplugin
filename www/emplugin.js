@@ -11,17 +11,20 @@ channel.waitForInitialization('onCordovaInfoReady');
  * @constructor
  */
 function EMPlugin () {
-    this.info = null;
-
+    this.aviable	= null;
+    this.is_virtual	= null;
+    this.serial		= null;
+    this.info		= null;
+	
     var t = this;
 
     channel.onCordovaReady.subscribe(function () {
         t.getInfo(
             function (info) {
 				t.aviable = true;
-				t.is_virtual = info.isVirtual;
-				t.serial = info.serial;
-				t.info = info.info || 'unknown';
+				t.is_virtual	= info.isVirtual || 'unknown';
+				t.serial		= info.serial || 'unknown';
+				t.info			= info.info || 'unknown';
                 channel.onCordovaInfoReady.fire();
             },
             function (e) {
