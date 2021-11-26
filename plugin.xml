@@ -17,7 +17,7 @@
 			</feature>
 		</config-file>
 
-		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/EMPlugin" />
+		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 	</platform>
 
 	<platform name="ios">
