@@ -1,4 +1,4 @@
-package org.pronetcom.easymerch2.emplugin;
+package ru.pronetcom.easymerch2.emplugin;
 
 import java.util.Objects;
 import java.util.TimeZone;

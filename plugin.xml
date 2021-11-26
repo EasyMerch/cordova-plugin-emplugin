@@ -13,11 +13,11 @@
 	<platform name="android">
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="EMPlugin" >
-				<param name="android-package" value="org.pronetcom.easymerch2.EMPlugin"/>
+				<param name="android-package" value="ru.pronetcom.easymerch2.EMPlugin"/>
 			</feature>
 		</config-file>
 
-		<source-file src="src/android/EMPlugin.java" target-dir="src/org/pronetcom/easymerch2/EMPlugin" />
+		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/EMPlugin" />
 	</platform>
 
 	<platform name="ios">
