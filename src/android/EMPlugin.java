@@ -21,7 +21,7 @@ import android.provider.Settings;
 
 public class EMPlugin extends CordovaPlugin {
 	public static final String TAG = "EMPlugin";
-	private static String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
+	private static final String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
 	/**
 	 * Constructor.
@@ -63,8 +63,7 @@ public class EMPlugin extends CordovaPlugin {
 	}
 
 	public String getSerialNumber(){
-		// TODO
-		return "";
+		return android.os.Build.SERIAL;
 	}
 
 	public boolean isVirtual() {

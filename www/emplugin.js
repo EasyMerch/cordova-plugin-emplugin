@@ -3,9 +3,6 @@ var channel = require('cordova/channel');
 var exec = require('cordova/exec');
 var cordova = require('cordova');
 
-channel.createSticky('onCordovaEMInfoReady');
-// Tell cordova channel to wait on the CordovaInfoReady event
-channel.waitForInitialization('onCordovaEMInfoReady');
 /**
  * @constructor
  */
@@ -25,11 +22,9 @@ function EMPlugin () {
 				t.device.isVirtual	= info.isVirtual || 'unknown';
 				t.device.serial		= info.serial || 'unknown';
 				t.device.info		= info.info || 'unknown';
-                channel.onCordovaEMInfoReady.fire();
             },
             function (e) {
 				t.device.aviable = false;
-                channel.onCordovaEMInfoReady.fire();
                 console.error('[ERROR] Error initializing cordova-plugin-device: ' + e);
             }
         );
