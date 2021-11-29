@@ -4,8 +4,6 @@
 	<description>Custom EM plugin</description>
 	<keywords>cordova,emplugin</keywords>
 
-	<!-- <uses-permission android:name="$PACKAGE_NAME.permission.READ_PHONE_STATE"/> -->
-
 	<js-module src="www/emplugin.js" name="emplugin">
 		<clobbers target="EMPlugin" />
 	</js-module>
