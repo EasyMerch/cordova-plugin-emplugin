@@ -78,7 +78,7 @@ public class EMPlugin extends CordovaPlugin {
 			//nox
 			|| this.onNox()
 			//bluestacks
-			|| "QC_Reference_Phone".equals(android.os.Build.BOARD) && !"Xiaomi".equalsIgnoreCase(android.os.Build.MANUFACTURER)
+			// || "QC_Reference_Phone".equals(android.os.Build.BOARD) && !"Xiaomi".equalsIgnoreCase(android.os.Build.MANUFACTURER)
 			|| this.onBlueStacks()
 			|| android.os.Build.MANUFACTURER.contains("Genymotion")
 			|| "Build2".equals(android.os.Build.HOST) //MSI App Player
