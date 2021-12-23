@@ -2,6 +2,7 @@ package ru.pronetcom.easymerch2.emplugin;
 
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.List;
 
 import java.io.File;
 import java.io.BufferedReader;
@@ -18,6 +19,11 @@ import org.json.JSONObject;
 
 import android.util.Log;
 import android.provider.Settings;
+
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 public class EMPlugin extends CordovaPlugin {
 	public static final String TAG = "EMPlugin";
@@ -60,7 +66,7 @@ public class EMPlugin extends CordovaPlugin {
 		return false;
 	}
 
-	public void getDeviceInfo(CallbackContext callbackContext){
+	public void getDeviceInfo(CallbackContext callbackContext) throws JSONException {
 		JSONObject r = new JSONObject();
 		r.put("isVirtual", this.isVirtual());
 		r.put("serial", this.getSerialNumber());
@@ -233,6 +239,6 @@ public class EMPlugin extends CordovaPlugin {
 			}
 		}
 		
-
+		return applist;
 	}
 }
