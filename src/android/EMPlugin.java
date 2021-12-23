@@ -23,6 +23,9 @@ public class EMPlugin extends CordovaPlugin {
 	public static final String TAG = "EMPlugin";
 	private static final String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
+	CallbackContext callbackContext;
+	JSONArray args;
+
 	/**
 	 * Constructor.
 	 */
@@ -49,17 +52,20 @@ public class EMPlugin extends CordovaPlugin {
 	 * @return                  True if the action was valid, false if not.
 	 */
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		if ("getDeviceInfo".equals(action)) {
-			JSONObject r = new JSONObject();
-			r.put("isVirtual", this.isVirtual());
-			r.put("serial", this.getSerialNumber());
-			r.put("info", this.getInfo());
-			callbackContext.success(r);
-			return true;
+		switch(action){
+			case "getDeviceInfo": getDeviceInfo(callbackContext); return true;
+			case "get": getMockPermissionApps(callbackContext); return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
+	}
+
+	public void getDeviceInfo(CallbackContext callbackContext){
+		JSONObject r = new JSONObject();
+		r.put("isVirtual", this.isVirtual());
+		r.put("serial", this.getSerialNumber());
+		r.put("info", this.getInfo());
+		callbackContext.success(r);
 	}
 
 	public String getSerialNumber(){
@@ -168,5 +174,65 @@ public class EMPlugin extends CordovaPlugin {
 		);
 
 		return noxFolder.exists();
+	}
+
+	public void getMockPermissionApps(CallbackContext callbackContext){
+		cordova.getThreadPool().execute(new Runnable() {
+			@Override
+			public void run() {
+				try{
+					callbackContext.success(getMockPermissionAppsList(cordova.getActivity()));
+				} catch(JSONException e){
+					callbackContext.error(e.getMessage());
+				}
+			}
+		});
+	}
+
+	public static JSONArray getMockPermissionAppsList(Context context) throws JSONException {
+		JSONArray applist = new JSONArray();
+
+		PackageManager pm = context.getPackageManager();
+		List<ApplicationInfo> packages =
+				pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
+		for (ApplicationInfo applicationInfo : packages) {
+			try {
+				PackageInfo packageInfo = pm.getPackageInfo(applicationInfo.packageName, PackageManager.GET_PERMISSIONS);
+				JSONObject appinfo = new JSONObject();
+
+				// Get Permissions
+				String[] requestedPermissions = packageInfo.requestedPermissions;
+
+				if (requestedPermissions != null) {
+					for (int i = 0; i < requestedPermissions.length; i++) {
+						// Check for System App //
+						if(!((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1)) {
+							if (!(
+								requestedPermissions[i].equals("android.permission.ACCESS_MOCK_LOCATION") &&
+								!applicationInfo.packageName.equals(context.getPackageName())
+							)) continue;
+							
+							String packageName = applicationInfo.packageName;
+
+							try{
+								appinfo.put("name", packageName);
+							} catch(JSONException e) {
+								String errorString = "ERROR ".concat(packageName).concat(": ").concat(e.getMessage());
+								appinfo.put("error", errorString);
+								Log.e(TAG, errorString);
+							}
+							applist.put(appinfo);
+							
+							break;
+						}
+					}
+				}
+			} catch (PackageManager.NameNotFoundException e) {
+				Log.e("Got exception " , e.getMessage());
+			}
+		}
+		
+
 	}
 }

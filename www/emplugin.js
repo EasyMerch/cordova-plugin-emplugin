@@ -16,7 +16,7 @@ function EMPlugin () {
 	
     var t = this;
     channel.onCordovaReady.subscribe(function () {
-        t.getDeviceInfo(
+        t._getDeviceInfo(
             function (info) {
 				t.device.aviable	= true;
 				t.device.isVirtual	= info.isVirtual || 'unknown';
@@ -25,16 +25,21 @@ function EMPlugin () {
             },
             function (e) {
 				t.device.aviable = false;
-                console.error('[ERROR] Error initializing cordova-plugin-device: ' + e);
+                console.error('[ERROR] Error initializing emplugin: ' + e);
             }
         );
     });
 }
 
 
-EMPlugin.prototype.getDeviceInfo = function (successCallback, errorCallback) {
+EMPlugin.prototype._getDeviceInfo=function (successCallback, errorCallback) {
     argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
     exec(successCallback, errorCallback, 'EMPlugin', 'getDeviceInfo', []);
+};
+
+EMPlugin.prototype.getMockPermissionApps=function(successCallback, errorCallback){
+	argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
+	exec(successCallback, errorCallback, 'EMPlugin', 'getMockPermissionApps', []);
 };
 
 module.exports = new EMPlugin();
