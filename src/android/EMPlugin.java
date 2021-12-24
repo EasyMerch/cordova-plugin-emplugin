@@ -60,7 +60,7 @@ public class EMPlugin extends CordovaPlugin {
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		switch(action){
 			case "getDeviceInfo": getDeviceInfo(callbackContext); return true;
-			case "get": getMockPermissionApps(callbackContext); return true;
+			case "getMockPermissionApps": getMockPermissionApps(callbackContext); return true;
 		}
 
 		return false;
