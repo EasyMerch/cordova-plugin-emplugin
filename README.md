@@ -11,7 +11,7 @@
 ## EMPlugin.locationIsMock(success, error)
 Проверка на фейк gps
 | Свойство | Тип | Значение |
-| --- | --- |
+| --- | --- | --- |
 | `success` | function(result) |  |
 | `result.isMock` | bool | true если gps фейковое |
 | `error` | function(err) |  |
@@ -21,6 +21,7 @@
 ## EMPlugin.getMockPermissionApps(success, error)
 Не работает на Android 11+
 | Свойство | Тип | Значение |
+| --- | --- | --- |
 | `success` | function(result) |  |
 | `result` | Object[] |  |
 | `result[].name` | string |  |
