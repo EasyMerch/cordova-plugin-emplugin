@@ -42,4 +42,9 @@ EMPlugin.prototype.getMockPermissionApps=function(successCallback, errorCallback
 	exec(successCallback, errorCallback, 'EMPlugin', 'getMockPermissionApps', []);
 };
 
+EMPlugin.prototype.locationIsMock=function(successCallback, errorCallback){
+	argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
+	exec(successCallback, errorCallback, 'EMPlugin', 'locationIsMock', []);
+};
+
 module.exports = new EMPlugin();
