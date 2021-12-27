@@ -9,10 +9,19 @@
 | `info` | string | Различная информация по устройству |
 
 ## EMPlugin.locationIsMock(success, error)
-| Свойство | Тип |
+Проверка на фейк gps
+| Свойство | Тип | Значение |
 | --- | --- |
-| `success` | function(result) |
-| `result.isMock` | bool |
-| `error` | function(err) |
-| `err.error` | string |
-| `err.errors` | string[] |
+| `success` | function(result) |  |
+| `result.isMock` | bool | true если gps фейковое |
+| `error` | function(err) |  |
+| `err.error` | string |  |
+| `err.errors` | string[] |  |
+
+## EMPlugin.getMockPermissionApps(success, error)
+Не работает на Android 11+
+| Свойство | Тип | Значение |
+| `success` | function(result) |  |
+| `result` | Object[] |  |
+| `result[].name` | string |  |
+| `result[].error` | string |  |
