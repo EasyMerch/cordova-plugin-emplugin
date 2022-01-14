@@ -47,4 +47,11 @@ EMPlugin.prototype.locationIsMock=function(successCallback, errorCallback){
 	exec(successCallback, errorCallback, 'EMPlugin', 'locationIsMock', []);
 };
 
+EMPlugin.prototype.saveImageToGallery=function(path, options){
+	options = options || {};
+	var success = options.success || function(){};
+	var error = options.error || function(){};
+	exec(success, error, 'EMPlugin', 'saveImageToGallery', [path, options]);
+};
+
 module.exports = new EMPlugin();
