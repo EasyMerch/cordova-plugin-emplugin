@@ -49,8 +49,15 @@ EMPlugin.prototype.locationIsMock=function(successCallback, errorCallback){
 
 EMPlugin.prototype.saveImageToGallery=function(path, options){
 	options = options || {};
-	var success = options.success || function(){};
+
 	var error = options.error || function(){};
+
+	function success(uri){
+		if(!uri) return error("Файл не создан");
+
+		if(options.success) options.success;
+	}
+	
 	exec(success, error, 'EMPlugin', 'saveImageToGallery', [path, options]);
 };
 
