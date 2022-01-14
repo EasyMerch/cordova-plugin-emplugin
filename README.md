@@ -26,3 +26,14 @@
 | `result` | Object[] |  |
 | `result[].name` | string |  |
 | `result[].error` | string |  |
+
+## EMPlugin.saveImageToGallery(path, options)
+Копирует файл в галерею
+| Свойство | Тип | Значение |
+| --- | --- | --- |
+| `path` | string | Путь к файлу |
+| `options` | Object |  |
+| `options.success` | function(uri) | Путь к созданному файлу |
+| `options.error` | function(string) |  |
+| `options.filename` | string | Название файла в галерее |
+| `options.description` | string | Описание файла в галерее |
