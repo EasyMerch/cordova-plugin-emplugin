@@ -19,7 +19,6 @@
 | `err.errors` | string[] |  |
 
 ## EMPlugin.getMockPermissionApps(success, error)
-Не работает на Android 11+
 | Свойство | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
