@@ -327,6 +327,8 @@ public class EMPlugin extends CordovaPlugin {
 
 		if(Build.VERSION.SDK_INT < 31){
 			isMock = location.isFromMockProvider();
+		} else {
+			isMock = location.isMock();
 		}
 
 		return isMock;
