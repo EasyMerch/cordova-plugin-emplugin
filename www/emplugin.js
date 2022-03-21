@@ -59,7 +59,7 @@ cordova.define("cordova-plugin-emplugin.emplugin", function(require, exports, mo
 
 		if(typeof path !== 'string'){
 			setTimeout(function(){
-				error('Path is not string');
+				error('Path is not a string');
 			}, 10);
 			return
 		}
