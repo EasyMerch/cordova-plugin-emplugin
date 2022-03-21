@@ -20,8 +20,8 @@
 
 	<platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="EMPlugin">
-                <param name="ios-package" value="EMPlugin"/>
+            <feature name="CDVEMPlugin">
+                <param name="ios-package" value="CDVEMPlugin"/>
             </feature>
         </config-file>
 
