@@ -24,6 +24,7 @@ import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -37,9 +38,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-public class EMPlugin extends CordovaPlugin {
+public class EMPlugin extends CordovaPlugin implements LocationListener {
 	public static final String TAG = "EMPlugin";
 	private static final String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
@@ -276,10 +278,10 @@ public class EMPlugin extends CordovaPlugin {
 		Location location = null;
 		initLocationManager();
 
-		String source;
 		JSONArray errors = new JSONArray();
 		String errorString = null;
 
+		/*
 		try{
 			location = locationByProvider(locationManager, LocationManager.GPS_PROVIDER);
 			source = "GPS";
@@ -289,11 +291,17 @@ public class EMPlugin extends CordovaPlugin {
 
 		if(location == null){
 			try{
-				location = locationByProvider(locationManager, LocationManager.NETWORK_PROVIDER);
+				location = locationByProvider(locationManager, LocationManager.NETWORK_PROVIDER, true);
 				source = "Network";
 			} catch(Exception e) {
 				errors.put("Network error: "+e.getMessage());
 			}
+		}
+		*/
+		try{
+			location = locationByProvider(locationManager, LocationManager.GPS_PROVIDER);
+		} catch(Exception e) {
+			errors.put("GPS error: "+e.getMessage());
 		}
 
 		if(location != null){
@@ -335,12 +343,14 @@ public class EMPlugin extends CordovaPlugin {
 	}
 
 	public Location locationByProvider(LocationManager locationManager, String provider) throws Exception {
-		if(!locationManager.isProviderEnabled(provider)) return null;
+		if(!locationManager.isProviderEnabled(provider)){
+			return null;
+		}
 
 		Context context = cordova.getContext();
 		if (
 				ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-						ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+				ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
 		) {
 			return null;
 		}
@@ -381,7 +391,7 @@ public class EMPlugin extends CordovaPlugin {
 				String url = EMPlugin.insertImage(cordova.getActivity().getApplicationContext().getContentResolver(), bitmap, filename, description);
 
 				if(url == null){
-					callbackContext.error('File not created');
+					callbackContext.error("File not created");
 				}
 
 				callbackContext.success();
@@ -492,5 +502,10 @@ public class EMPlugin extends CordovaPlugin {
 		} catch (IOException ex) {
 			return null;
 		}
+	}
+
+	@Override
+	public void onLocationChanged(@NonNull Location location) {
+		
 	}
 }
