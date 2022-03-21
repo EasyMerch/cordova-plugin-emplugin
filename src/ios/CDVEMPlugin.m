@@ -52,7 +52,7 @@
 	if(error){
 		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]];
 	} else {
-		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"SUCCESS"];
+		pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
 	}
 
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];

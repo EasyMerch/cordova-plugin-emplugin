@@ -380,7 +380,11 @@ public class EMPlugin extends CordovaPlugin {
 
 				String url = EMPlugin.insertImage(cordova.getActivity().getApplicationContext().getContentResolver(), bitmap, filename, description);
 
-				callbackContext.success(url);
+				if(url == null){
+					callbackContext.error('File not created');
+				}
+
+				callbackContext.success();
 			}
 		});
 	}

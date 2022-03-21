@@ -32,7 +32,7 @@
 | --- | --- | --- |
 | `path` | string | Путь к файлу |
 | `options` | Object |  |
-| `options.success` | function(uri) | Путь к созданному файлу |
+| `options.success` | function() |  |
 | `options.error` | function(string) |  |
 | `options.filename` | string | Название файла в галерее |
 | `options.description` | string | Описание файла в галерее |

@@ -53,10 +53,8 @@ cordova.define("cordova-plugin-emplugin.emplugin", function(require, exports, mo
 	
 		var error = options.error || function(){};
 	
-		function success(uri){
-			if(!uri) return error("Файл не создан");
-	
-			if(options.success) options.success(uri);
+		function success(){
+			if(options.success) options.success();
 		}
 
 		if(typeof path !== 'string'){
