@@ -287,7 +287,7 @@ public class EMPlugin extends CordovaPlugin {
 		JSONObject result = new JSONObject();
 
 		Location location = null;
-		initLocationManager();
+		initLocationData();
 
 		JSONArray errors = new JSONArray();
 		String errorString = null;
