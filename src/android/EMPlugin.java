@@ -24,6 +24,7 @@ import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Criteria;
 import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Build;
@@ -41,11 +42,12 @@ import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-public class EMPlugin extends CordovaPlugin implements LocationListener {
+public class EMPlugin extends CordovaPlugin {
 	public static final String TAG = "EMPlugin";
 	private static final String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
 	public static LocationManager locationManager = null;
+	public static Criteria locationCriteria = null;
 
 	/**
 	 * Constructor.
@@ -70,14 +72,22 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 	 * @param action            The action to execute.
 	 * @param args              JSONArry of arguments for the plugin.
 	 * @param callbackContext   The callback id used when calling back into JavaScript.
-	 * @return                  True if the action was valid, false if not.
+	 * @return True if the action was valid, false if not.
 	 */
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		switch(action){
-			case "getDeviceInfo": getDeviceInfo(callbackContext); return true;
-			case "getMockPermissionApps": getMockPermissionApps(callbackContext); return true;
-			case "locationIsMock": getLocationIsMock(callbackContext); return true;
-			case "saveImageToGallery": saveImageToGallery(callbackContext, args); return true;
+		switch (action) {
+			case "getDeviceInfo":
+				getDeviceInfo(callbackContext);
+				return true;
+			case "getMockPermissionApps":
+				getMockPermissionApps(callbackContext);
+				return true;
+			case "locationIsMock":
+				getLocationIsMock(callbackContext);
+				return true;
+			case "saveImageToGallery":
+				saveImageToGallery(callbackContext, args);
+				return true;
 		}
 
 		return false;
@@ -91,7 +101,7 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		callbackContext.success(r);
 	}
 
-	public String getSerialNumber(){
+	public String getSerialNumber() {
 		return android.os.Build.SERIAL;
 	}
 
@@ -119,17 +129,17 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 
 	public String getInfo() {
 		return String.format(
-				"FINGERPRINT:%s\n"+
-						"MODEL:%s\n"+
-						"MANUFACTURER:%s\n"+
-						"BRAND:%s\n"+
-						"DEVICE:%s\n"+
-						"BOARD:%s\n"+
-						"HOST:%s\n"+
-						"PRODUCT:%s\n"+
-						"HARDWARE:%s\n"+
-						"onBlueStacks:%s\n"+
-						"onNox:%s\n"+
+				"FINGERPRINT:%s\n" +
+						"MODEL:%s\n" +
+						"MANUFACTURER:%s\n" +
+						"BRAND:%s\n" +
+						"DEVICE:%s\n" +
+						"BOARD:%s\n" +
+						"HOST:%s\n" +
+						"PRODUCT:%s\n" +
+						"HARDWARE:%s\n" +
+						"onBlueStacks:%s\n" +
+						"onNox:%s\n" +
 						"ro.kernel.qemu:%s",
 				android.os.Build.FINGERPRINT,
 				android.os.Build.MODEL,
@@ -154,27 +164,28 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 			process = new ProcessBuilder().command(GETPROP_EXECUTABLE_PATH, propName).redirectErrorStream(true).start();
 			bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line = bufferedReader.readLine();
-			if (line == null){
+			if (line == null) {
 				line = ""; //prop not set
 			}
-			Log.i(TAG,"read System Property: " + propName + "=" + line);
+			Log.i(TAG, "read System Property: " + propName + "=" + line);
 			return line;
 		} catch (Exception e) {
-			Log.e(TAG,"Failed to read System Property " + propName,e);
+			Log.e(TAG, "Failed to read System Property " + propName, e);
 			return "";
-		} finally{
-			if (bufferedReader != null){
+		} finally {
+			if (bufferedReader != null) {
 				try {
 					bufferedReader.close();
-				} catch (IOException e) {}
+				} catch (IOException e) {
+				}
 			}
-			if (process != null){
+			if (process != null) {
 				process.destroy();
 			}
 		}
 	}
 
-	public Boolean onBlueStacks(){
+	public Boolean onBlueStacks() {
 		File sharedFolder = new File(android.os.Environment
 				.getExternalStorageDirectory().toString()
 				+ File.separatorChar
@@ -185,7 +196,7 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		return sharedFolder.exists();
 	}
 
-	public Boolean onNox(){
+	public Boolean onNox() {
 		File noxFolder = new File(File.separatorChar
 				+ "storage"
 				+ File.separatorChar
@@ -199,13 +210,13 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		return noxFolder.exists();
 	}
 
-	public void getMockPermissionApps(CallbackContext callbackContext){
+	public void getMockPermissionApps(CallbackContext callbackContext) {
 		cordova.getThreadPool().execute(new Runnable() {
 			@Override
 			public void run() {
-				try{
+				try {
 					callbackContext.success(getMockPermissionAppsList(cordova.getActivity()));
-				} catch(JSONException e){
+				} catch (JSONException e) {
 					callbackContext.error(e.getMessage());
 				}
 			}
@@ -230,7 +241,7 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 				if (requestedPermissions != null) {
 					for (int i = 0; i < requestedPermissions.length; i++) {
 						// Check for System App //
-						if(!((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1)) {
+						if (!((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1)) {
 							if (!(
 									requestedPermissions[i].equals("android.permission.ACCESS_MOCK_LOCATION") &&
 											!applicationInfo.packageName.equals(context.getPackageName())
@@ -238,9 +249,9 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 
 							String packageName = applicationInfo.packageName;
 
-							try{
+							try {
 								appinfo.put("name", packageName);
-							} catch(JSONException e) {
+							} catch (JSONException e) {
 								String errorString = "ERROR ".concat(packageName).concat(": ").concat(e.getMessage());
 								appinfo.put("error", errorString);
 								Log.e(TAG, errorString);
@@ -252,27 +263,27 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 					}
 				}
 			} catch (PackageManager.NameNotFoundException e) {
-				Log.e("Got exception " , e.getMessage());
+				Log.e("Got exception ", e.getMessage());
 			}
 		}
 
 		return applist;
 	}
 
-	public void getLocationIsMock(CallbackContext callbackContext){
+	public void getLocationIsMock(CallbackContext callbackContext) {
 		cordova.getThreadPool().execute(new Runnable() {
 			@Override
 			public void run() {
-				try{
+				try {
 					locationIsMock(callbackContext);
-				} catch(Exception e){
+				} catch (Exception e) {
 					callbackContext.error(e.getMessage());
 				}
 			}
 		});
 	}
 
-	public void locationIsMock(CallbackContext callbackContext) throws Exception{
+	public void locationIsMock(CallbackContext callbackContext) throws Exception {
 		JSONObject result = new JSONObject();
 
 		Location location = null;
@@ -281,47 +292,33 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		JSONArray errors = new JSONArray();
 		String errorString = null;
 
-		/*
-		try{
-			location = locationByProvider(locationManager, LocationManager.GPS_PROVIDER);
-			source = "GPS";
-		} catch(Exception e) {
-			errors.put("GPS error: "+e.getMessage());
+		try {
+			location = getLastLocation();
+		} catch (Exception e) {
+			errors.put("getLastLocation error: " + e.getMessage());
 		}
 
-		if(location == null){
-			try{
-				location = locationByProvider(locationManager, LocationManager.NETWORK_PROVIDER, true);
-				source = "Network";
-			} catch(Exception e) {
-				errors.put("Network error: "+e.getMessage());
-			}
-		}
-		*/
-		try{
-			location = locationByProvider(locationManager, LocationManager.GPS_PROVIDER);
-		} catch(Exception e) {
-			errors.put("GPS error: "+e.getMessage());
-		}
-
-		if(location != null){
+		if (location != null) {
 			boolean isMock = locationIsMock(location);
 
-			try{
+			try {
 				result.put("isMock", isMock);
-			} catch(JSONException e){
+				result.put("provider", location.getProvider());
+				result.put("lat", location.getLatitude());
+				result.put("lng", location.getLongitude());
+			} catch (JSONException e) {
 				errorString = e.getMessage();
 			}
 		} else {
 			errorString = "No location";
 		}
 
-		if(errorString != null){
-			try{
+		if (errorString != null) {
+			try {
 				result.put("error", errorString);
 				result.put("errors", errors);
 				callbackContext.error(result);
-			} catch(JSONException e){
+			} catch (JSONException e) {
 				callbackContext.error(e.getMessage());
 			}
 			return;
@@ -330,10 +327,10 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		callbackContext.success(result);
 	}
 
-	public boolean locationIsMock(Location location){
+	public boolean locationIsMock(Location location) {
 		boolean isMock = false;
 
-		if(Build.VERSION.SDK_INT < 31){
+		if (Build.VERSION.SDK_INT < 31) {
 			isMock = location.isFromMockProvider();
 		} else {
 			isMock = location.isMock();
@@ -342,26 +339,32 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		return isMock;
 	}
 
-	public Location locationByProvider(LocationManager locationManager, String provider) throws Exception {
-		if(!locationManager.isProviderEnabled(provider)){
-			return null;
-		}
-
+	public Location getLastLocation() throws Exception {
 		Context context = cordova.getContext();
 		if (
 				ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-				ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+						ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
 		) {
+			Log.e(TAG, "getLastLocation permission not granted");
 			return null;
 		}
+		Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(locationCriteria, true));
 
-		return locationManager.getLastKnownLocation(provider);
+		return location;
 	}
 
-	public void initLocationManager(){
-		if(this.locationManager != null) return;
-
+	public void initLocationData() {
 		locationManager = (LocationManager) this.cordova.getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+		if(locationCriteria == null){
+			locationCriteria = new Criteria();
+			locationCriteria.setPowerRequirement(Criteria.POWER_LOW);
+			locationCriteria.setAccuracy(Criteria.ACCURACY_FINE);
+			locationCriteria.setSpeedRequired(true);
+			locationCriteria.setAltitudeRequired(false);
+			locationCriteria.setBearingRequired(false);
+			locationCriteria.setCostAllowed(false);
+		}
 	}
 
 	public void saveImageToGallery(CallbackContext callbackContext, JSONArray args){
@@ -502,10 +505,5 @@ public class EMPlugin extends CordovaPlugin implements LocationListener {
 		} catch (IOException ex) {
 			return null;
 		}
-	}
-
-	@Override
-	public void onLocationChanged(@NonNull Location location) {
-		
 	}
 }
