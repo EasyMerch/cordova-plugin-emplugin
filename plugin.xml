@@ -24,13 +24,33 @@
 	</platform>
 
 	<platform name="ios">
-        <config-file target="config.xml" parent="/*">
-            <feature name="CDVEMPlugin">
-                <param name="ios-package" value="CDVEMPlugin"/>
-            </feature>
-        </config-file>
+		<config-file target="config.xml" parent="/*">
+			<feature name="CDVEMPlugin">
+				<param name="ios-package" value="CDVEMPlugin"/>
+			</feature>
+		</config-file>
 
 		<header-file src="src/ios/CDVEMPlugin.h" />
 		<source-file src="src/ios/CDVEMPlugin.m" />
+
+		<header-file src="src/ios/SceneDelegate.h" />
+		<source-file src="src/ios/SceneDelegate.m" />
+
+		<edit-config file="*-Info.plist" mode="merge" target="UISceneConfigurations">
+			<dict>
+				<key>UIWindowSceneSessionRoleApplication</key>
+				<array>
+				<dict>
+					<key>EMSceneDelegate</key>
+					<string>$(PRODUCT_MODULE_NAME).FSSceneDelegate</string>
+				</dict>
+				</array>
+			</dict>
+		</edit-config>
+
+		<edit-config file="*-Info.plist" mode="merge" target="UIApplicationSupportsMultipleScenes">
+			<false/>
+		</edit-config>
+
 	</platform>
 </plugin>
