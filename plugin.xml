@@ -25,7 +25,7 @@
 
 	<platform name="ios">
 		<config-file target="config.xml" parent="/*">
-			<feature name="CDVEMPlugin">
+			<feature name="EMPlugin">
 				<param name="ios-package" value="CDVEMPlugin"/>
 			</feature>
 		</config-file>
@@ -36,20 +36,25 @@
 		<header-file src="src/ios/EMSceneDelegate.h" />
 		<source-file src="src/ios/EMSceneDelegate.m" />
 
-		<config-file target="*-Info.plist" mode="overwrite" parent="UISceneConfigurations">
+
+
+		<config-file target="*-Info.plist" mode="overwrite" parent="UIApplicationSceneManifest">
+			<dict>
+			<key>UIApplicationSupportsMultipleScenes</key>
+			<false/>
+			<key>UISceneConfigurations</key>
 			<dict>
 				<key>UIWindowSceneSessionRoleApplication</key>
 				<array>
-				<dict>
-					<key>EMSceneDelegate</key>
-					<string>$(PRODUCT_MODULE_NAME).FSSceneDelegate</string>
-				</dict>
+					<dict>
+						<key>UISceneConfigurationName</key>
+						<string>Default Configuration</string>
+						<key>UISceneDelegateClassName</key>
+						<string>EMSceneDelegate</string>
+					</dict>
 				</array>
 			</dict>
-		</config-file>
-
-		<config-file target="*-Info.plist" mode="overwrite" parent="UIApplicationSupportsMultipleScenes">
-			<false/>
+		</dict>
 		</config-file>
 
 	</platform>
