@@ -36,7 +36,7 @@
 		<header-file src="src/ios/EMSceneDelegate.h" />
 		<source-file src="src/ios/EMSceneDelegate.m" />
 
-		<edit-config file="*-Info.plist" mode="merge" target="UISceneConfigurations">
+		<config-file target="*-Info.plist" mode="overwrite" parent="UISceneConfigurations">
 			<dict>
 				<key>UIWindowSceneSessionRoleApplication</key>
 				<array>
@@ -46,11 +46,11 @@
 				</dict>
 				</array>
 			</dict>
-		</edit-config>
+		</config-file>
 
-		<edit-config file="*-Info.plist" mode="merge" target="UIApplicationSupportsMultipleScenes">
+		<config-file target="*-Info.plist" mode="overwrite" parent="UIApplicationSupportsMultipleScenes">
 			<false/>
-		</edit-config>
+		</config-file>
 
 	</platform>
 </plugin>
