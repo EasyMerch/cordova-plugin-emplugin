@@ -33,8 +33,8 @@
 		<header-file src="src/ios/CDVEMPlugin.h" />
 		<source-file src="src/ios/CDVEMPlugin.m" />
 
-		<header-file src="src/ios/SceneDelegate.h" />
-		<source-file src="src/ios/SceneDelegate.m" />
+		<header-file src="src/ios/EMSceneDelegate.h" />
+		<source-file src="src/ios/EMSceneDelegate.m" />
 
 		<edit-config file="*-Info.plist" mode="merge" target="UISceneConfigurations">
 			<dict>
