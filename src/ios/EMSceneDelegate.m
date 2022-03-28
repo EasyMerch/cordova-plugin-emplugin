@@ -1,4 +1,4 @@
-#import "SceneDelegate.h"
+#import "EMSceneDelegate.h"
 
 @implementation SceneDelegate
 
