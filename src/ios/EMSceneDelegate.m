@@ -9,7 +9,6 @@
 #pragma mark UISceneDelegate implementation
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions{
-	NSLog(@"DEBUG willConnectToSession %@", connectionOptions);
 	self.window = [[UIWindow alloc] initWithWindowScene:(UIWindowScene *)scene];
     self.window.autoresizesSubviews = YES;
 
