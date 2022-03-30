@@ -26,6 +26,7 @@
 
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+	[[[UIApplication sharedApplication] delegate] setWindow:window];
 
 	[self handleOpenURL:connectionOptions.URLContexts];
 }
