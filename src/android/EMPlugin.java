@@ -391,6 +391,7 @@ public class EMPlugin extends CordovaPlugin {
 
 				if(url == null){
 					callbackContext.error("File not created");
+					return;
 				}
 
 				callbackContext.success();
