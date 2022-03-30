@@ -287,20 +287,26 @@ public class EMPlugin extends CordovaPlugin {
 		JSONObject result = new JSONObject();
 
 		Location location = null;
+		boolean isMock = false;
 		initLocationData();
 
 		JSONArray errors = new JSONArray();
 		String errorString = null;
 
-		try {
-			location = getLastLocation();
-		} catch (Exception e) {
-			errors.put("getLastLocation error: " + e.getMessage());
+		List<String> providers = locationManager.getProviders(true);
+		if(providers != null){
+			for (String provider : providers) {
+				location = getLastLocation(provider);
+				if(location != null && locationIsMock(location)){
+					isMock = true;
+					break;
+				}
+			}
+		} else {
+			errors.put("getLastLocation error: No providers found");
 		}
 
 		if (location != null) {
-			boolean isMock = locationIsMock(location);
-
 			try {
 				result.put("isMock", isMock);
 				result.put("provider", location.getProvider());
@@ -339,7 +345,7 @@ public class EMPlugin extends CordovaPlugin {
 		return isMock;
 	}
 
-	public Location getLastLocation() throws Exception {
+	public Location getLastLocation(String provider) throws Exception {
 		Context context = cordova.getContext();
 		if (
 				ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -348,23 +354,13 @@ public class EMPlugin extends CordovaPlugin {
 			Log.e(TAG, "getLastLocation permission not granted");
 			return null;
 		}
-		Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(locationCriteria, true));
+		Location location = locationManager.getLastKnownLocation(provider);
 
 		return location;
 	}
 
 	public void initLocationData() {
 		locationManager = (LocationManager) this.cordova.getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-		if(locationCriteria == null){
-			locationCriteria = new Criteria();
-			locationCriteria.setPowerRequirement(Criteria.POWER_LOW);
-			locationCriteria.setAccuracy(Criteria.ACCURACY_FINE);
-			locationCriteria.setSpeedRequired(true);
-			locationCriteria.setAltitudeRequired(false);
-			locationCriteria.setBearingRequired(false);
-			locationCriteria.setCostAllowed(false);
-		}
 	}
 
 	public void saveImageToGallery(CallbackContext callbackContext, JSONArray args){
