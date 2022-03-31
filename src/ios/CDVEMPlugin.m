@@ -9,8 +9,16 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "Diagnostic_location.h"
 
 @implementation CDVEMPlugin{
+}
+
+- (void)pluginInitialize{
+	CDVAppDelegate* appDelegate =[[UIApplication sharedApplication] delegate];
+	Diagnostic_Location* diagnosticPlugin = [appDelegate.viewController getCommandInstance:@"Diagnostic_Location"];
+	diagnosticPlugin.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+	diagnosticPlugin.locationManager.allowsBackgroundLocationUpdates = TRUE;
 }
 
 - (void)getDeviceInfo:(CDVInvokedUrlCommand*)command{
