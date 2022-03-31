@@ -2,6 +2,8 @@ package ru.pronetcom.easymerch2.emplugin;
 
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.List;
 
 import java.io.File;
@@ -13,6 +15,8 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.file.FileUtils;
+import org.apache.cordova.file.LocalFilesystemURL;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -382,14 +386,44 @@ public class EMPlugin extends CordovaPlugin {
 					callbackContext.error(e.getMessage());
 					return;
 				}
+				
+				FileUtils fileUtils = (FileUtils)webView.getPluginManager().getPlugin("File");
+				if(fileUtils == null){
+					callbackContext.error("File plugin is null");
+					return;
+				}
 
-				path = path.replaceFirst("^file://", "");
+				Uri path_uri = Uri.parse(path);
+				
+				LocalFilesystemURL localURL = fileUtils.resolveNativeUri(path_uri);
+				if(localURL == null){
+					localURL = LocalFilesystemURL.parse(path_uri);
+				}
 
-				Bitmap bitmap = BitmapFactory.decodeFile(path);
+				if(localURL == null){
+					callbackContext.error("localURL is null");
+					return;
+				}
 
-				String url = EMPlugin.insertImage(cordova.getActivity().getApplicationContext().getContentResolver(), bitmap, filename, description);
+				String file_path = null;
 
-				if(url == null){
+				try {
+					file_path = fileUtils.filesystemPathForURL(localURL.uri.toString());
+				} catch (MalformedURLException e) {
+					callbackContext.error("MalformedURLException");
+					return;
+				}
+
+				Bitmap bitmap = BitmapFactory.decodeFile(file_path);
+
+				if(bitmap == null){
+					callbackContext.error("Bitmap is null");
+					return;
+				}
+
+				String gallery_url = EMPlugin.insertImage(cordova.getActivity().getApplicationContext().getContentResolver(), bitmap, filename, description);
+
+				if(gallery_url == null){
 					callbackContext.error("File not created");
 					return;
 				}
@@ -491,6 +525,8 @@ public class EMPlugin extends CordovaPlugin {
 		values.put(MediaStore.Images.Thumbnails.WIDTH,thumb.getWidth());
 
 		Uri url = cr.insert(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, values);
+
+		if(url == null) return null;
 
 		try {
 			OutputStream thumbOut = cr.openOutputStream(url);
