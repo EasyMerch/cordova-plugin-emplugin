@@ -299,24 +299,36 @@ public class EMPlugin extends CordovaPlugin {
 
 		List<String> providers = locationManager.getProviders(true);
 		if(providers != null){
+			long maxTs = 0;
+			Location lastLocation = null;
 			for (String provider : providers) {
 				Location location = getLastLocation(provider);
-				if(location != null && locationIsMock(location)){
-					isMock = true;
-					mockLocation = location;
-					break;
+				if(location == null) continue;
+
+				long locationTs = location.getTime();
+				if(locationTs > maxTs){
+					lastLocation = location;
+					maxTs = locationTs;
 				}
 			}
+
+			if(lastLocation != null && locationIsMock(lastLocation)){
+				isMock = true;
+				mockLocation = lastLocation;
+			}
+
 		} else {
+			errorString = "getLastLocation error: No providers found";
 			errors.put("getLastLocation error: No providers found");
 		}
 
 		try {
 			result.put("isMock", isMock);
 			if(mockLocation != null){
-				result.put("provider", mockLocation.getProvider());
-				result.put("lat", mockLocation.getLatitude());
-				result.put("lng", mockLocation.getLongitude());
+				result.put("provider",	mockLocation.getProvider());
+				result.put("lat",		mockLocation.getLatitude());
+				result.put("lng",		mockLocation.getLongitude());
+				result.put("ts",		mockLocation.getTime());
 			}
 		} catch (JSONException e) {
 			errorString = e.getMessage();
