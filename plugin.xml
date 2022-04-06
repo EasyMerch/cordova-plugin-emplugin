@@ -37,6 +37,11 @@
 		<header-file src="src/ios/EMSceneDelegate.h" />
 		<source-file src="src/ios/EMSceneDelegate.m" />
 
+		<header-file src="src/ios/UIWindow+UIWindowEM.h" />
+		<source-file src="src/ios/UIWindow+UIWindowEM.m" />
+
+		<header-file src="src/ios/MethodSwizzle.h" />
+		<source-file src="src/ios/MethodSwizzle.m" />
 
 
 		<config-file target="*-Info.plist" mode="overwrite" parent="UIApplicationSceneManifest">

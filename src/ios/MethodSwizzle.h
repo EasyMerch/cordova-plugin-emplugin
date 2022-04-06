@@ -1,0 +1,1 @@
+void MethodSwizzle(Class c, SEL orig_sel, SEL new_sel);

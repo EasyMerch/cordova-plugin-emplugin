@@ -1,7 +1,8 @@
 #import <UIKit/UIKit.h>
-#import "Cordova/CDVViewController.h"
 #import "EMSceneDelegate.h"
+#import "MainViewController.h"
 #import "MSALPublicClientApplication.h"
+#import "MethodSwizzle.h"
 
 @implementation EMSceneDelegate
 
@@ -12,11 +13,10 @@
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions{
 	self.window = [[UIWindow alloc] initWithWindowScene:(UIWindowScene *)scene];
     self.window.autoresizesSubviews = YES;
+	MethodSwizzle([UIWindow class], @selector(initWithFrame:), @selector(initWithFrameEM:));
 
     // only set if not already set in subclass
-    if (self.viewController == nil) {
-        self.viewController = [[CDVViewController alloc] init];
-    }
+	self.viewController = [[MainViewController alloc] init];
 
     // Set your app's start page by setting the <content src='foo.html' /> tag in config.xml.
     // If necessary, uncomment the line below to override it.
@@ -24,6 +24,7 @@
 
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
+
 
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
