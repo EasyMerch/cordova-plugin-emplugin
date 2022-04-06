@@ -3,6 +3,7 @@
 #import "MainViewController.h"
 #import "MSALPublicClientApplication.h"
 #import "MethodSwizzle.h"
+#import "UIWindow+UIWindowEM.h"
 
 @implementation EMSceneDelegate
 
