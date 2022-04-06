@@ -12,7 +12,8 @@
 #pragma mark UISceneDelegate implementation
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions{
-	self.window = [[UIWindow alloc] initWithWindowScene:(UIWindowScene *)scene];
+	self.mainScene = (UIWindowScene *)scene;
+	self.window = [[UIWindow alloc] initWithWindowScene:self.mainScene];
     self.window.autoresizesSubviews = YES;
 	MethodSwizzle([UIWindow class], @selector(initWithFrame:), @selector(initWithFrameEM:));
 
