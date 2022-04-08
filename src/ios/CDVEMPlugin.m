@@ -18,7 +18,6 @@
 	CDVAppDelegate* appDelegate =[[UIApplication sharedApplication] delegate];
 	Diagnostic_Location* diagnosticPlugin = [appDelegate.viewController getCommandInstance:@"Diagnostic_Location"];
 	diagnosticPlugin.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-	diagnosticPlugin.locationManager.allowsBackgroundLocationUpdates = TRUE;
 }
 
 - (void)getDeviceInfo:(CDVInvokedUrlCommand*)command{
@@ -34,7 +33,7 @@
 		
 		imageRequestOptions.synchronous = YES;
 		NSString* path = command.arguments[0];
-		NSDictionary* options = (NSDictionary*)command.arguments[1];
+		// NSDictionary* options = (NSDictionary*)command.arguments[1];
 		// NSString* filename = [options objectForKey:@"filename"];
 		// NSString* description = [options objectForKey:@"description"];
 
