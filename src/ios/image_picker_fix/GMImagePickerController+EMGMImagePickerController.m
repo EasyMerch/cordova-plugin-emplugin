@@ -4,8 +4,12 @@
 @implementation GMImagePickerController(GMImagePickerControllerEM)
 
 	- (id)init_new:(bool)allow_v{
-		[self init_old:allow_v];
-		self.presentationDelegate = [GMPresentationDelegate alloc];
+		self = [self init_old:allow_v];
+		GMPresentationDelegate * delegate = [GMPresentationDelegate alloc];
+		delegate.picker = self;
+
+		self.presentationController.delegate = delegate;
+		return self;
 	}
 
 @end

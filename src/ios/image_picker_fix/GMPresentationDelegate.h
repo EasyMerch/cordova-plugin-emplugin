@@ -1,5 +1,14 @@
-#import <UIKit/UIKit.h>
+#import "GMPresentationDelegate.h"
+#import "SOSPicker.h"
 
-@interface GMPresentationDelegate : UIResponder <UIAdaptivePresentationControllerDelegate>{}
+@implementation GMPresentationDelegate
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+	SOSPicker* delegate = (SOSPicker*)[self.picker delegate];
+	// [delegate imagePickerControllerDidCancel:nil];
+	[delegate performSelector:@(imagePickerControllerDidCancel) withObject:nil];
+}
 
 @end
