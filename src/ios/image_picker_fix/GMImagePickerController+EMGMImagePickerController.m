@@ -1,16 +1,11 @@
 #import "GMImagePickerController+EMGMImagePickerController.h"
+#import "GMPresentationDelegate.h"
 
 @implementation GMImagePickerController(GMImagePickerControllerEM)
 
 	- (id)init_new:(bool)allow_v{
 		[self init_old:allow_v];
-		self.presentationDelegate = self;
+		self.presentationDelegate = [GMPresentationDelegate alloc];
 	}
-
-#pragma mark - UIAdaptivePresentationControllerDelegate
-
-- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
-	[self imagePickerControllerDidCancel: nil];
-}
 
 @end
