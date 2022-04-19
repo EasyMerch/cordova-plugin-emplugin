@@ -10,6 +10,9 @@
 #import <ImageIO/ImageIO.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "Diagnostic_location.h"
+#import "MethodSwizzle.h"
+#import "GMImagePickerController.h"
+#import "GMImagePickerController+EMGMImagePickerController.h"
 
 @implementation CDVEMPlugin{
 }
@@ -18,6 +21,10 @@
 	CDVAppDelegate* appDelegate =[[UIApplication sharedApplication] delegate];
 	Diagnostic_Location* diagnosticPlugin = [appDelegate.viewController getCommandInstance:@"Diagnostic_Location"];
 	diagnosticPlugin.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+
+	// заменяю init  у класса из image-picker'а, чтобы там присвоить presentationDelegate
+	MethodSwizzle([GMImagePickerController class], @selector(init_old:), @selector(init:));
+	MethodSwizzle([GMImagePickerController class], @selector(init:), @selector(init_new:));
 }
 
 - (void)getDeviceInfo:(CDVInvokedUrlCommand*)command{
