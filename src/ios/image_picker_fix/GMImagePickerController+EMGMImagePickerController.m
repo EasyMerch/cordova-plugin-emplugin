@@ -1,4 +1,5 @@
 #import "GMImagePickerController+EMGMImagePickerController.h"
+#import "SOSPicker.h"
 
 @implementation GMImagePickerController(GMImagePickerControllerEM)
 
