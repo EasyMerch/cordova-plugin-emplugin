@@ -42,9 +42,6 @@
 
 		<header-file src="src/ios/image_picker_fix/GMImagePickerController+EMGMImagePickerController.h" />
 		<source-file src="src/ios/image_picker_fix/GMImagePickerController+EMGMImagePickerController.m" />
-		<header-file src="src/ios/image_picker_fix/GMPresentationDelegate.h" />
-		<source-file src="src/ios/image_picker_fix/GMPresentationDelegate.m" />
-
 		<header-file src="src/ios/MethodSwizzle.h" />
 		<source-file src="src/ios/MethodSwizzle.m" />
 

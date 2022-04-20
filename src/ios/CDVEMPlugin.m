@@ -21,10 +21,6 @@
 	CDVAppDelegate* appDelegate =[[UIApplication sharedApplication] delegate];
 	Diagnostic_Location* diagnosticPlugin = [appDelegate.viewController getCommandInstance:@"Diagnostic_Location"];
 	diagnosticPlugin.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-
-	// заменяю init  у класса из image-picker'а, чтобы там присвоить presentationDelegate
-	MethodSwizzle([GMImagePickerController class], @selector(init_old:), @selector(init:));
-	MethodSwizzle([GMImagePickerController class], @selector(init:), @selector(init_new:));
 }
 
 - (void)getDeviceInfo:(CDVInvokedUrlCommand*)command{
