@@ -13,6 +13,7 @@
 			<feature name="EMPlugin" >
 				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMPlugin"/>
 			</feature>
+			<preference name="AndroidXEnabled" value="true" />
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest">
@@ -27,8 +28,6 @@
 				</intent-filter>
 			</receiver>
 		</config-file>
-
-		<preference name="AndroidXEnabled" value="true" />
 
 		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 		<source-file src="src/android/TimeChangeReceiver.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
