@@ -28,6 +28,8 @@
 			</receiver>
 		</config-file>
 
+		<preference name="AndroidXEnabled" value="true" />
+
 		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 		<source-file src="src/android/TimeChangeReceiver.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 	</platform>
