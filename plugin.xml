@@ -20,16 +20,12 @@
 			<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 		</config-file>
 
-		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<receiver android:name="ru.pronetcom.easymerch2.emplugin.TimeChangeReceiver" android:exported="true">
-				<intent-filter>
-					<action android:name="android.intent.action.TIME_SET" />
-				</intent-filter>
-			</receiver>
-		</config-file>
+		<!-- <config-file target="AndroidManifest.xml" parent="/manifest/application">
+
+		</config-file> -->
 
 		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
-		<source-file src="src/android/TimeChangeReceiver.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
+		<!-- <source-file src="src/android/TimeChangeTracker.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" /> -->
 	</platform>
 
 	<platform name="ios">
