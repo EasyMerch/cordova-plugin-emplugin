@@ -11,11 +11,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class TimeChangedReceiver extends BroadcastReceiver {
-	private static final String LAST_DIFF_PREF_KEY = "TimeChangedReceiver.lastTimeDifference";
-	private static final String CHANGES_PREF_KEY = "TimeChangedReceiver.timeChages";
-	public static final String SHARED_PREFERENCES_NAME = "EMPref";
+public class TimeChangeReceiver extends BroadcastReceiver {
+	private static final String LAST_DIFF_PREF_KEY = "TimeChangeReceiver.lastTimeDifference";
+	private static final String CHANGES_PREF_KEY = "TimeChangeReceiver.timeChages";
 	private static SharedPreferences pref = null;
+	private static Array<TimeChangeListener> listeners = new Array<TimeChangeListener>();
+
+	private static final String SHARED_PREFERENCES_NAME = "EMPref";
+
+	public static interface TimeChangeListener{
+		public void onChange(long timeChangeDifference);
+	}
+
+	public static void addListener(TimeChangeListener listener){
+		listeners.put(listener);
+	}
 
 	public static long getTimeDifference(){
 		long elapsedTime = SystemClock.elapsedRealtime();
@@ -38,6 +48,14 @@ public class TimeChangedReceiver extends BroadcastReceiver {
 	public static JSONArray getTimeChanges(Context context) throws JSONException{
 		SharedPreferences pref = getPreferences(context);
 		return new JSONArray(pref.getString(CHANGES_PREF_KEY, ""));
+	}
+
+	public static void clearTimeChange(Context context){
+		SharedPreferences pref = getPreferences(context);
+		pref.edit()
+			.putString(CHANGES_PREF_KEY, "[]")
+			.apply()
+		;
 	}
 
 	private static SharedPreferences getPreferences(Context context){
@@ -81,7 +99,7 @@ public class TimeChangedReceiver extends BroadcastReceiver {
 
 			writeValue = changes.toString();
 		} catch (JSONException e) {
-			Log.e("TimeChangedReceiver", "TimeChangedReceiver.addTimeChange JSONException "+e.getMessage());
+			Log.e("TimeChangeReceiver", "TimeChangeReceiver.addTimeChange JSONException "+e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -90,15 +108,11 @@ public class TimeChangedReceiver extends BroadcastReceiver {
 				.putString(CHANGES_PREF_KEY, writeValue)
 				.apply()
 			;
-		}
-	}
 
-	private static void clearTimeChange(Context context){
-		SharedPreferences pref = getPreferences(context);
-		pref.edit()
-			.putString(CHANGES_PREF_KEY, "[]")
-			.apply()
-		;
+			for (TimeChangeListener listener : listeners) {
+				listener.onChange(timeChangeDifference);
+			}
+		}
 	}
 
 	@Override

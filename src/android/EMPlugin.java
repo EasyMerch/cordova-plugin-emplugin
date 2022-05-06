@@ -72,11 +72,14 @@ public class EMPlugin extends CordovaPlugin {
 				saveImageToGallery(callbackContext, args);
 				return true;
 			case "getTimeChanges":
-				callbackContext.success(TimeChangedReceiver.getTimeChanges(cordova.getContext()));
+				callbackContext.success(TimeChangeReceiver.getTimeChanges(cordova.getContext()));
 				return true;
 			case "clearTimeChanges":
-				TimeChangedReceiver.clearTimeChanges(cordova.getContext())
+				TimeChangeReceiver.clearTimeChanges(cordova.getContext())
 				callbackContext.success();
+				return true;
+			case "watchTimeChanges":
+				// TODO
 				return true;
 		}
 
@@ -85,7 +88,7 @@ public class EMPlugin extends CordovaPlugin {
 
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
-		TimeChangedReceiver.startTimeTrack(cordova.getContext());
+		TimeChangeReceiver.startTimeTrack(cordova.getContext());
 	}
 
 	public void getDeviceInfo(CallbackContext callbackContext) throws JSONException {
