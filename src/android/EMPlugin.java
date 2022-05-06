@@ -74,6 +74,10 @@ public class EMPlugin extends CordovaPlugin {
 			case "getTimeChanges":
 				callbackContext.success(TimeChangedReceiver.getTimeChanges(cordova.getContext()));
 				return true;
+			case "clearTimeChanges":
+				TimeChangedReceiver.clearTimeChanges(cordova.getContext())
+				callbackContext.success();
+				return true;
 		}
 
 		return false;

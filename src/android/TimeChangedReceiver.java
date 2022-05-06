@@ -93,6 +93,14 @@ public class TimeChangedReceiver extends BroadcastReceiver {
 		}
 	}
 
+	private static void clearTimeChange(Context context){
+		SharedPreferences pref = getPreferences(context);
+		pref.edit()
+			.putString(CHANGES_PREF_KEY, "[]")
+			.apply()
+		;
+	}
+
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		switch(intent.getAction()){

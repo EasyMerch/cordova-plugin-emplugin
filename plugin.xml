@@ -25,6 +25,7 @@
 			<receiver android:name="ru.pronetcom.easymerch2.emplugin.TimeChangedReceiver" android:exported="true"/>
 		</config-file>
 
+		<!-- почему-то если сразу в ресивере указать, то не работает -->
 		<config-file target="AndroidManifest.xml" parent="/manifest/application/receiver[@android:name='ru.pronetcom.easymerch2.emplugin.TimeChangedReceiver']">
 			<intent-filter>
 					<action android:name="android.intent.action.TIME_SET" />

@@ -52,6 +52,11 @@ EMPlugin.prototype.getTimeChanges=function(successCallback, errorCallback){
 	exec(successCallback, errorCallback, 'EMPlugin', 'getTimeChanges', []);
 };
 
+EMPlugin.prototype.getTimeChanges=function(successCallback, errorCallback){
+	argscheck.checkArgs('fF', 'EMPlugin.clearTimeChange', arguments);
+	exec(successCallback, errorCallback, 'EMPlugin', 'clearTimeChange', []);
+};
+
 EMPlugin.prototype.saveImageToGallery=function(path, options){
 	options = options || {};
 
