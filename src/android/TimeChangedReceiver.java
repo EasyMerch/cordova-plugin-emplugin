@@ -58,7 +58,7 @@ public class TimeChangedReceiver extends BroadcastReceiver {
 		long lastTimeDifference = getLastTimeDifference(context);
 		long currentTimeDifference = getTimeDifference();
 
-		long timeChangeDifference = lastTimeDifference - currentTimeDifference;
+		long timeChangeDifference = currentTimeDifference - lastTimeDifference;
 
 		SharedPreferences pref = getPreferences(context);
 
