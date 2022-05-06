@@ -33,18 +33,23 @@ function EMPlugin () {
 
 
 EMPlugin.prototype._getDeviceInfo=function (successCallback, errorCallback) {
-	argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
+	argscheck.checkArgs('fF', 'EMPlugin._getDeviceInfo', arguments);
 	exec(successCallback, errorCallback, 'EMPlugin', 'getDeviceInfo', []);
 };
 
 EMPlugin.prototype.getMockPermissionApps=function(successCallback, errorCallback){
-	argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
+	argscheck.checkArgs('fF', 'EMPlugin.getMockPermissionApps', arguments);
 	exec(successCallback, errorCallback, 'EMPlugin', 'getMockPermissionApps', []);
 };
 
 EMPlugin.prototype.locationIsMock=function(successCallback, errorCallback){
-	argscheck.checkArgs('fF', 'EMPlugin.getInfo', arguments);
+	argscheck.checkArgs('fF', 'EMPlugin.locationIsMock', arguments);
 	exec(successCallback, errorCallback, 'EMPlugin', 'locationIsMock', []);
+};
+
+EMPlugin.prototype.getTimeChanges=function(successCallback, errorCallback){
+	argscheck.checkArgs('fF', 'EMPlugin.getTimeChanges', arguments);
+	exec(successCallback, errorCallback, 'EMPlugin', 'getTimeChanges', []);
 };
 
 EMPlugin.prototype.saveImageToGallery=function(path, options){

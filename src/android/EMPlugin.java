@@ -3,7 +3,6 @@ package ru.pronetcom.easymerch2.emplugin;
 import java.io.FileNotFoundException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.util.List;
 
 import java.io.File;
@@ -25,11 +24,10 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.location.Criteria;
-import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -43,7 +41,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 public class EMPlugin extends CordovaPlugin {
@@ -51,24 +48,6 @@ public class EMPlugin extends CordovaPlugin {
 	private static final String GETPROP_EXECUTABLE_PATH = "/system/bin/getprop";
 
 	public static LocationManager locationManager = null;
-	public static Criteria locationCriteria = null;
-
-	/**
-	 * Constructor.
-	 */
-	public EMPlugin() {
-	}
-
-	/**
-	 * Sets the context of the Command. This can then be used to do things like
-	 * get file paths associated with the Activity.
-	 *
-	 * @param cordova The context of the main Activity.
-	 * @param webView The CordovaWebView Cordova is running in.
-	 */
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		super.initialize(cordova, webView);
-	}
 
 	/**
 	 * Executes the request and returns PluginResult.
@@ -92,9 +71,17 @@ public class EMPlugin extends CordovaPlugin {
 			case "saveImageToGallery":
 				saveImageToGallery(callbackContext, args);
 				return true;
+			case "getTimeChanges":
+				callbackContext.success(TimeChangedReceiver.getTimeChanges(cordova.getContext()));
+				return true;
 		}
 
 		return false;
+	}
+
+	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+		super.initialize(cordova, webView);
+		TimeChangedReceiver.startTimeTrack(cordova.getContext());
 	}
 
 	public void getDeviceInfo(CallbackContext callbackContext) throws JSONException {
@@ -549,5 +536,6 @@ public class EMPlugin extends CordovaPlugin {
 		} catch (IOException ex) {
 			return null;
 		}
+
 	}
 }
