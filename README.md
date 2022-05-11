@@ -1,6 +1,8 @@
 # cordova-plugin-emplugin
 
-## EMPlugin.device
+## EMPlugin
+
+### device
 | Свойство | Тип | Значение |
 | --- | --- | --- |
 | `aviable` | bool | Информация по устройству получена |
@@ -8,9 +10,21 @@
 | `serial` | string | Серийный номер устройства (пока не работает) |
 | `info` | string | Различная информация по устройству |
 
-## EMPlugin.locationIsMock(success, error)
+### saveImageToGallery(path, options)
+Копирует файл в галерею
+| Аргумент | Тип | Значение |
+| --- | --- | --- |
+| `path` | string | Путь к файлу |
+| `options` | Object |  |
+| `options.success` | function() |  |
+| `options.error` | function(string) |  |
+| `options.filename` | string | Название файла в галерее (Android only) |
+| `options.description` | string | Описание файла в галерее (Android only) |
+
+### locationIsMock(success, error)
+Android only
 Проверка на фейк gps
-| Свойство | Тип | Значение |
+| Аргумент | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
 | `result.isMock` | bool | true если gps фейковое |
@@ -18,21 +32,42 @@
 | `err.error` | string |  |
 | `err.errors` | string[] |  |
 
-## EMPlugin.getMockPermissionApps(success, error)
-| Свойство | Тип | Значение |
+### getMockPermissionApps(success, error)
+Android only
+| Аргумент | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
 | `result` | Object[] |  |
 | `result[].name` | string |  |
 | `result[].error` | string |  |
 
-## EMPlugin.saveImageToGallery(path, options)
-Копирует файл в галерею
-| Свойство | Тип | Значение |
+## EMTimeChangeCheker
+Android only
+
+### getTimeChanges(success, error)
+Возвращает массив, в который записана информациям по переводам времени
+| Аргумент | Тип | Значение |
 | --- | --- | --- |
-| `path` | string | Путь к файлу |
+| `success` | function(result) |  |
+| `result` | Object[] |  |
+| `result[].timestamp` | int | Время на телефоне после того, как было переведено время, в миллисекундах |
+| `result[].timeChangeDifference` | int | На сколько перевели время, в миллисекундах |
+| `result[].unknownLastDifference` | bool | true, если не удалось определить, на сколько перевели время |
+| `error` | function(message) |  |
+
+### clearTimeChanges(options)
+Очищает массив с информацией по переводам времени
+| Аргумент | Тип | Значение |
+| --- | --- | --- |
 | `options` | Object |  |
 | `options.success` | function() |  |
-| `options.error` | function(string) |  |
-| `options.filename` | string | Название файла в галерее |
-| `options.description` | string | Описание файла в галерее |
+| `options.error` | function(message) |  |
+
+### watchTimeChanges(success, options) -> int
+Добавляет listener на изменение времени
+Возвращает id listener'а
+| Аргумент | Тип | Значение |
+| --- | --- | --- |
+| `success` | function() |  |
+| `options` | Object |  |
+| `options.error` | function(message) |  |

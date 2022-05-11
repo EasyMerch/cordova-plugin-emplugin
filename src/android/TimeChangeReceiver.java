@@ -11,20 +11,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class TimeChangeReceiver extends BroadcastReceiver {
 	private static final String LAST_DIFF_PREF_KEY = "TimeChangeReceiver.lastTimeDifference";
 	private static final String CHANGES_PREF_KEY = "TimeChangeReceiver.timeChages";
 	private static SharedPreferences pref = null;
-	private static Array<TimeChangeListener> listeners = new Array<TimeChangeListener>();
+	private static final ArrayList<TimeChangeListener> listeners = new ArrayList<>();
 
 	private static final String SHARED_PREFERENCES_NAME = "EMPref";
 
-	public static interface TimeChangeListener{
-		public void onChange(long timeChangeDifference);
+	public interface TimeChangeListener{
+		void onChange(JSONObject changeObj);
 	}
 
 	public static void addListener(TimeChangeListener listener){
-		listeners.put(listener);
+		listeners.add(listener);
 	}
 
 	public static long getTimeDifference(){
@@ -50,7 +52,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 		return new JSONArray(pref.getString(CHANGES_PREF_KEY, ""));
 	}
 
-	public static void clearTimeChange(Context context){
+	public static void clearTimeChanges(Context context){
 		SharedPreferences pref = getPreferences(context);
 		pref.edit()
 			.putString(CHANGES_PREF_KEY, "[]")
@@ -97,26 +99,25 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 			JSONArray changes = new JSONArray(pref.getString(CHANGES_PREF_KEY, "[]"));
 			changes.put(changeObj);
 
-			writeValue = changes.toString();
-		} catch (JSONException e) {
-			Log.e("TimeChangeReceiver", "TimeChangeReceiver.addTimeChange JSONException "+e.getMessage());
-			e.printStackTrace();
-		}
-
-		if(writeValue != null){
 			pref.edit()
 				.putString(CHANGES_PREF_KEY, writeValue)
 				.apply()
 			;
 
+			setTimeDifference(context);
+
 			for (TimeChangeListener listener : listeners) {
-				listener.onChange(timeChangeDifference);
+				listener.onChange(changeObj);
 			}
+		} catch (JSONException e) {
+			Log.e("TimeChangeReceiver", "TimeChangeReceiver.addTimeChange JSONException "+e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void onReceive(Context context, Intent intent) {
+	public void onReceive(Context context, Intent intent){
+		Log.e("DEBUG", "TimeChangeReceiver.onReceive");
 		switch(intent.getAction()){
 			case Intent.ACTION_TIME_CHANGED:
 				addTimeChange(context);

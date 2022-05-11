@@ -8,10 +8,17 @@
 		<clobbers target="EMPlugin" />
 	</js-module>
 
+	<js-module src="www/EMTimeChangeChecker.js" name="EMTimeChangeChecker">
+		<clobbers target="EMTimeChangeChecker" />
+	</js-module>
+
 	<platform name="android">
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="EMPlugin" >
 				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMPlugin"/>
+			</feature>
+			<feature name="EMTimeChangeChecker" >
+				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMTimeChangeChecker"/>
 			</feature>
 		</config-file>
 
@@ -22,11 +29,11 @@
 		</config-file>
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<receiver android:name="ru.pronetcom.easymerch2.emplugin.TimeChangedReceiver" android:exported="true"/>
+			<receiver android:name="ru.pronetcom.easymerch2.emplugin.TimeChangeReceiver" android:exported="true"/>
 		</config-file>
 
 		<!-- почему-то если сразу в ресивере указать, то не работает -->
-		<config-file target="AndroidManifest.xml" parent="/manifest/application/receiver[@android:name='ru.pronetcom.easymerch2.emplugin.TimeChangedReceiver']">
+		<config-file target="AndroidManifest.xml" parent="/manifest/application/receiver[@android:name='ru.pronetcom.easymerch2.emplugin.TimeChangeReceiver']">
 			<intent-filter>
 					<action android:name="android.intent.action.TIME_SET" />
 					<action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -34,7 +41,8 @@
 		</config-file>
 
 		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
-		<source-file src="src/android/TimeChangedReceiver.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
+		<source-file src="src/android/TimeChangeReceiver.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
+		<source-file src="src/android/EMTimeChangeChecker.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 	</platform>
 
 	<platform name="ios">

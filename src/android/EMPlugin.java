@@ -10,10 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.file.FileUtils;
 import org.apache.cordova.file.LocalFilesystemURL;
 import org.json.JSONArray;
@@ -24,7 +22,6 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -71,24 +68,9 @@ public class EMPlugin extends CordovaPlugin {
 			case "saveImageToGallery":
 				saveImageToGallery(callbackContext, args);
 				return true;
-			case "getTimeChanges":
-				callbackContext.success(TimeChangeReceiver.getTimeChanges(cordova.getContext()));
-				return true;
-			case "clearTimeChanges":
-				TimeChangeReceiver.clearTimeChanges(cordova.getContext())
-				callbackContext.success();
-				return true;
-			case "watchTimeChanges":
-				// TODO
-				return true;
 		}
 
 		return false;
-	}
-
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		super.initialize(cordova, webView);
-		TimeChangeReceiver.startTimeTrack(cordova.getContext());
 	}
 
 	public void getDeviceInfo(CallbackContext callbackContext) throws JSONException {

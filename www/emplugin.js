@@ -47,33 +47,18 @@ EMPlugin.prototype.locationIsMock=function(successCallback, errorCallback){
 	exec(successCallback, errorCallback, 'EMPlugin', 'locationIsMock', []);
 };
 
-EMPlugin.prototype.getTimeChanges=function(successCallback, errorCallback){
-	argscheck.checkArgs('fF', 'EMPlugin.getTimeChanges', arguments);
-	exec(successCallback, errorCallback, 'EMPlugin', 'getTimeChanges', []);
-};
-
-EMPlugin.prototype.getTimeChanges=function(successCallback, errorCallback){
-	argscheck.checkArgs('fF', 'EMPlugin.clearTimeChange', arguments);
-	exec(successCallback, errorCallback, 'EMPlugin', 'clearTimeChange', []);
-};
-
 EMPlugin.prototype.saveImageToGallery=function(path, options){
 	options = options || {};
 
-	var error = options.error || function(){};
+	var errorCallback = options.error;
 
-	function success(){
+	function successCallback(){
 		if(options.success) options.success();
 	}
 
-	if(typeof path !== 'string'){
-		setTimeout(function(){
-			error('Path is not a string');
-		}, 10);
-		return
-	}
+	argscheck.checkArgs('fFsO', 'EMPlugin.saveImageToGallery', [successCallback, errorCallback, path, options], arguments.callee);
 	
-	exec(success, error, 'EMPlugin', 'saveImageToGallery', [path, options]);
+	exec(successCallback, errorCallback, 'EMPlugin', 'saveImageToGallery', [path, options]);
 };
 
 module.exports = new EMPlugin();
