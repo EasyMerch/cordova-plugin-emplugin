@@ -52,7 +52,9 @@ Android only
 | `result` | Object[] |  |
 | `result[].timestamp` | int | Время на телефоне после того, как было переведено время, в миллисекундах |
 | `result[].timeChangeDifference` | int | На сколько перевели время, в миллисекундах |
-| `result[].unknownLastDifference` | bool | true, если не удалось определить, на сколько перевели время |
+| `result[].status` | String | `OK` - Можно верить
+`UNKNOWN` - `timeChangeDifference` не известно
+`SUPPOSED` - пользователь *предположительно* перевел время (в случае, если пользователь остановил приложение (force stop) и перезагрузил устройство, это будет ложное срабатывание) |
 | `error` | function(message) |  |
 
 ### clearTimeChanges(options)

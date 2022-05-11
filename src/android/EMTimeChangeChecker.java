@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class EMTimeChangeChecker extends CordovaPlugin {
-	public static final String TAG = "EMPlugin";
+	public static final String TAG = "EMTimeChangeChecker";
 	
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		switch(action) {

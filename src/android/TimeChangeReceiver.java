@@ -44,6 +44,11 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 		long lastTimeDifference = getLastTimeDifference(context);
 		if(lastTimeDifference == 0L){
 			setTimeDifference(context);
+		} else {
+			long currentTimeDifference = getTimeDifference();
+			if(currentTimeDifference != lastTimeDifference){
+				addTimeChange(context, true);
+			}
 		}
 	}
 
@@ -80,6 +85,10 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 	}
 
 	private static void addTimeChange(Context context){
+		addTimeChange(context, false);
+	}
+
+	private static void addTimeChange(Context context, boolean supposed){
 		long lastTimeDifference = getLastTimeDifference(context);
 		long currentTimeDifference = getTimeDifference();
 
@@ -87,8 +96,9 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 
 		SharedPreferences pref = getPreferences(context);
 
-		String writeValue = null;
 		try {
+			String status = "OK";
+
 			JSONObject changeObj = new JSONObject();
 			changeObj
 					.put("timestamp", System.currentTimeMillis())
@@ -96,16 +106,21 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 			;
 
 			if(lastTimeDifference == 0L){
-				changeObj
-					.put("unknownLastDifference", true)
-					.put("timeChangeDifference", 0L);
+				changeObj.put("timeChangeDifference", 0L);
+				status = "UNKNOWN";
 			}
+
+			if(supposed){
+				status = "SUPPOSED";
+			}
+
+			changeObj.put("status", status);
 
 			JSONArray changes = new JSONArray(pref.getString(CHANGES_PREF_KEY, "[]"));
 			changes.put(changeObj);
 
 			pref.edit()
-				.putString(CHANGES_PREF_KEY, writeValue)
+				.putString(CHANGES_PREF_KEY, changes.toString())
 				.apply()
 			;
 
