@@ -87,7 +87,6 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 
 		SharedPreferences pref = getPreferences(context);
 
-		String writeValue = null;
 		try {
 			JSONObject changeObj = new JSONObject();
 			changeObj
@@ -105,7 +104,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 			changes.put(changeObj);
 
 			pref.edit()
-				.putString(CHANGES_PREF_KEY, writeValue)
+				.putString(CHANGES_PREF_KEY, changes.toString())
 				.apply()
 			;
 
