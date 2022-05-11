@@ -63,7 +63,7 @@ Android only
 | `options.success` | function() |  |
 | `options.error` | function(message) |  |
 
-### watchTimeChanges(success, options) -> int
+### watch(success, options) -> int
 Добавляет listener на изменение времени
 Возвращает id listener'а
 | Аргумент | Тип | Значение |
@@ -71,3 +71,9 @@ Android only
 | `success` | function() |  |
 | `options` | Object |  |
 | `options.error` | function(message) |  |
+
+### clearWatch(id)
+Удаляет listener на изменение времени
+| Аргумент | Тип | Значение |
+| --- | --- | --- |
+| `id` | int | id listener'а, который надо удалить |

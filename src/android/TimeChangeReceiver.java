@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class TimeChangeReceiver extends BroadcastReceiver {
 	private static final String LAST_DIFF_PREF_KEY = "TimeChangeReceiver.lastTimeDifference";
-	private static final String CHANGES_PREF_KEY = "TimeChangeReceiver.timeChages";
+	private static final String CHANGES_PREF_KEY = "TimeChangeReceiver.timeChanges";
 	private static SharedPreferences pref = null;
 	private static final ArrayList<TimeChangeListener> listeners = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 
 	public static JSONArray getTimeChanges(Context context) throws JSONException{
 		SharedPreferences pref = getPreferences(context);
-		return new JSONArray(pref.getString(CHANGES_PREF_KEY, ""));
+		return new JSONArray(pref.getString(CHANGES_PREF_KEY, "[]"));
 	}
 
 	public static void clearTimeChanges(Context context){

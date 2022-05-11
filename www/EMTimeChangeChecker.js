@@ -6,7 +6,10 @@ var cordova = require('cordova');
 /**
  * @constructor
  */
-function EMTimeChangeChecker () {}
+function EMTimeChangeChecker () {
+	this._watch_id = 1;
+	this._watch_callbacks = {};
+}
 
 EMTimeChangeChecker.prototype.getTimeChanges=function(successCallback, errorCallback){
 	argscheck.checkArgs('fF', 'EMTimeChangeChecker.getTimeChanges', arguments);
@@ -23,12 +26,29 @@ EMTimeChangeChecker.prototype.clearTimeChanges=function(options){
 	exec(successCallback, errorCallback, 'EMTimeChangeChecker', 'clearTimeChanges', []);
 };
 
-EMTimeChangeChecker.prototype.watchTimeChanges=function(successCallback, options){
+EMTimeChangeChecker.prototype.watch=function(successCallback, options){
 	var errorCallback = options.error;
-
 	argscheck.checkArgs('fFO', 'EMTimeChangeChecker.watchTimeChanges', [successCallback, errorCallback, options], arguments.callee);
 
-	exec(successCallback, errorCallback, 'EMTimeChangeChecker', 'watchTimeChanges', []);
+	if(!this.watch_started){
+		exec(this._onTimeChanged.bind(this), errorCallback, 'EMTimeChangeChecker', 'watchTimeChanges', []);
+	}
+
+	var watch_id = this.watch_id++;
+
+	this._watch_callbacks[watch_id] = successCallback;
+
+	return watch_id;
+};
+
+EMTimeChangeChecker.prototype.clearWatch=function(id){
+	delete this._watch_callbacks[id];
+};
+
+EMTimeChangeChecker.prototype._onTimeChanged=function(changeObj){
+	for(var k in this._watch_callbacks){
+		this._watch_callbacks(changeObj);
+	}
 };
 
 module.exports = new EMTimeChangeChecker();
