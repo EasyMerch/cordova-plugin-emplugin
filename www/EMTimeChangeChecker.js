@@ -32,6 +32,7 @@ EMTimeChangeChecker.prototype.watch=function(successCallback, options){
 
 	if(!this.watch_started){
 		exec(this._onTimeChanged.bind(this), errorCallback, 'EMTimeChangeChecker', 'watchTimeChanges', []);
+		this.watch_started = 1;
 	}
 
 	var watch_id = this.watch_id++;
