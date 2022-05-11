@@ -27,7 +27,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 
 	public static int addListener(TimeChangeListener listener){
 		listeners.add(listener);
-		return listeners.size();
+		return listeners.size() - 1;
 	}
 
 	public static void removeListener(int index){
