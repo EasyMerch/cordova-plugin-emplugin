@@ -76,14 +76,14 @@ Android only
 | --- | --- | --- |
 | `id` | int | id listener'а, который надо удалить |
 
-#### timeChangeObject
+### timeChangeObject
 | Свойство | Тип | Значение |
 | --- | --- | --- |
 | `timestamp` | int | Время на телефоне после того, как было переведено время, в миллисекундах |
 | `timeChangeDifference` | int | На сколько перевели время, в миллисекундах |
 | `[status](#timeChangeObjectStatus)` | String | Статус из таблицы ниже |
 
-#### Возможные статусы {#timeChangeObjectStatus}
+### Возможные статусы {#timeChangeObjectStatus}
 | Код | Значение |
 | --- | --- |
 | `OK` | Время переведено |
