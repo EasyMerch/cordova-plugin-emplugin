@@ -61,7 +61,7 @@ Android only
 | `options.error` | function(message) |  |
 
 ### watch(success, options) -> int
-Добавляет listener на изменение времени
+Добавляет listener на изменение времени<br />
 Возвращает id listener'а
 | Аргумент | Тип | Значение |
 | --- | --- | --- |
