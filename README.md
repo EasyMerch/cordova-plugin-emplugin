@@ -82,8 +82,8 @@ Android only
 | `timestamp` | int | Время на телефоне после того, как было переведено время, в миллисекундах |
 | `timeChangeDifference` | int | На сколько перевели время, в миллисекундах |
 | [`status`](#timeChangeObjectStatus) | String | Статус из таблицы ниже |
-### My Great Heading {#custom-id}
-### Возможные статусы {#timechangeobjectstatus}
+
+### [Возможные статусы][timechangeobjectstatus]
 | Код | Значение |
 | --- | --- |
 | `OK` | Время переведено |
