@@ -83,7 +83,7 @@ Android only
 | `timeChangeDifference` | int | На сколько перевели время, в миллисекундах |
 | [`status`](#timeChangeObjectStatus) | String | Статус из таблицы ниже |
 
-### [anchor](#heading-to-achor) Возможные статусы
+### [Возможные статусы]{#a}
 | Код | Значение |
 | --- | --- |
 | `OK` | Время переведено |
