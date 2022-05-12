@@ -49,7 +49,7 @@ Android only
 | Аргумент | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
-| `result` | timeChangeObject(#timeChangeObject)[] |  |
+| `result` | [timeChangeObject](#timeChangeObject)[] |  |
 | `error` | function(message) |  |
 
 ### clearTimeChanges(options)
@@ -66,7 +66,7 @@ Android only
 | Аргумент | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
-| `result` | timeChangeObject(#timeChangeObject) |  |
+| `result` | [timeChangeObject](#timeChangeObject) |  |
 | `options` | Object |  |
 | `options.error` | function(message) |  |
 
