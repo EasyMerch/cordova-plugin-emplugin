@@ -87,7 +87,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 		long lastTimeDifference = getLastTimeDifference(context);
 		long currentTimeDifference = getTimeDifference();
 
-		long timeChangeDifference = currentTimeDifference - lastTimeDifference;
+		long timeChangeInterval = currentTimeDifference - lastTimeDifference;
 
 		SharedPreferences pref = getPreferences(context);
 
@@ -97,11 +97,11 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 			JSONObject changeObj = new JSONObject();
 			changeObj
 					.put("timestamp", System.currentTimeMillis())
-					.put("timeChangeDifference", timeChangeDifference)
+					.put("timeChangeInterval", timeChangeInterval)
 			;
 
 			if(lastTimeDifference == 0L){
-				changeObj.put("timeChangeDifference", 0L);
+				changeObj.put("timeChangeInterval", 0L);
 				status = "UNKNOWN";
 			}
 
