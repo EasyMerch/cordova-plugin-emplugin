@@ -50,7 +50,7 @@ Android only
 | Аргумент | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
-| `result` | [timeChangeObject](#timeChangeObject)[] |  |
+| `result` | [timeChangeInfo](#timeChangeInfo)[] |  |
 | `error` | function(message) |  |
 
 ### clearTimeChanges(options)
@@ -67,7 +67,7 @@ Android only
 | Аргумент | Тип | Значение |
 | --- | --- | --- |
 | `success` | function(result) |  |
-| `result` | [timeChangeObject](#timeChangeObject) |  |
+| `result` | [timeChangeInfo](#timeChangeInfo) |  |
 | `options` | Object |  |
 | `options.error` | function(message) |  |
 
@@ -77,7 +77,7 @@ Android only
 | --- | --- | --- |
 | `id` | int | id listener'а, который надо удалить |
 
-### timeChangeObject
+### timeChangeInfo
 | Свойство | Тип | Значение |
 | --- | --- | --- |
 | `timestamp` | int | Время на телефоне после того, как было переведено время, в миллисекундах |
