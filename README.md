@@ -42,7 +42,7 @@ Android only
 | `result[].error` | string |  |
 
 ## EMTimeChangeTracker
-Android only
+Android only<br />
 Отслеживает переводы времени пользователем. Время может переводиться автоматически, обычно не больше чем на минуту, поэтому важно проверять интервал.
 
 ### getTimeChanges(success, error)
