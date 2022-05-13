@@ -35,7 +35,7 @@ EMTimeChangeTracker.prototype.watch=function(successCallback, options){
 		this.watch_started = 1;
 	}
 
-	var watch_id = this.watch_id++;
+	var watch_id = this._watch_id++;
 
 	this._watch_callbacks[watch_id] = successCallback;
 
