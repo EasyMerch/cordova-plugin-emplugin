@@ -22,7 +22,7 @@
 | `options.description` | string | Описание файла в галерее (Android only) |
 
 ### locationIsMock(success, error)
-Android only
+Android only<br />
 Проверка на фейк gps
 | Аргумент | Тип | Значение |
 | --- | --- | --- |
