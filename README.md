@@ -41,7 +41,7 @@ Android only
 | `result[].name` | string |  |
 | `result[].error` | string |  |
 
-## EMTimeChangeCheker
+## EMTimeChangeTracker
 Android only
 
 ### getTimeChanges(success, error)
