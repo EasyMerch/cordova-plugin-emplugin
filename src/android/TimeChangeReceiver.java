@@ -132,7 +132,6 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent){
-		Log.e("DEBUG", "TimeChangeReceiver.onReceive");
 		switch(intent.getAction()){
 			case Intent.ACTION_TIME_CHANGED:
 				addTimeChange(context);
