@@ -48,7 +48,7 @@ EMTimeChangeTracker.prototype.clearWatch=function(id){
 
 EMTimeChangeTracker.prototype._onTimeChanged=function(changeObj){
 	for(var k in this._watch_callbacks){
-		this._watch_callbacks(changeObj);
+		this._watch_callbacks[k](changeObj);
 	}
 };
 
