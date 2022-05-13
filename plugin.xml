@@ -8,8 +8,8 @@
 		<clobbers target="EMPlugin" />
 	</js-module>
 
-	<js-module src="www/EMTimeChangeChecker.js" name="EMTimeChangeChecker">
-		<clobbers target="EMTimeChangeChecker" />
+	<js-module src="www/EMTimeChangeTracker.js" name="EMTimeChangeTracker">
+		<clobbers target="EMTimeChangeTracker" />
 	</js-module>
 
 	<platform name="android">
@@ -17,8 +17,8 @@
 			<feature name="EMPlugin" >
 				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMPlugin"/>
 			</feature>
-			<feature name="EMTimeChangeChecker" >
-				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMTimeChangeChecker"/>
+			<feature name="EMTimeChangeTracker" >
+				<param name="android-package" value="ru.pronetcom.easymerch2.emplugin.EMTimeChangeTracker"/>
 			</feature>
 		</config-file>
 
@@ -42,7 +42,7 @@
 
 		<source-file src="src/android/EMPlugin.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 		<source-file src="src/android/TimeChangeReceiver.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
-		<source-file src="src/android/EMTimeChangeChecker.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
+		<source-file src="src/android/EMTimeChangeTracker.java" target-dir="src/ru/pronetcom/easymerch2/emplugin" />
 	</platform>
 
 	<platform name="ios">

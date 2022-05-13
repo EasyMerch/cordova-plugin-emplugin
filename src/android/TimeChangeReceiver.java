@@ -25,7 +25,7 @@ public class TimeChangeReceiver extends BroadcastReceiver {
 		void onChange(JSONObject changeObj);
 	}
 
-	public void addListener(TimeChangeListener listener){
+	public static void addListener(TimeChangeListener listener){
 		listeners.add(listener);
 	}
 
